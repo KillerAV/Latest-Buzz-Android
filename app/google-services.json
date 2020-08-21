@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "354525220367",
+    "firebase_url": "https://latest-buzz.firebaseio.com",
+    "project_id": "latest-buzz",
+    "storage_bucket": "latest-buzz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354525220367:android:830ef4fa0b357dd9251d7a",
+        "android_client_info": {
+          "package_name": "com.example.newsapplicationroom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354525220367-4s8npbauvlc1rnkq4do97oaaeiusqabm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW57E_FqEZdid8BtPxGDoYnanEJ-bSgaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354525220367-4s8npbauvlc1rnkq4do97oaaeiusqabm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

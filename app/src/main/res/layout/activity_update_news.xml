@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateNews">
+
+    <TextView
+        android:id="@+id/add_news_heading"
+        android:text="@string/update_news_header"
+        android:textSize="30sp"
+        style="@style/text_view_style"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+    <TextView
+        android:id="@+id/add_news_title_heading"
+        android:text="@string/enter_title"
+        android:textSize="20sp"
+        style="@style/text_view_body_style"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_below="@+id/add_news_heading"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/standard_margin_dimension"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"/>
+
+    <EditText
+        android:id="@+id/newsTitle"
+        style="@style/text_view_body_style"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/standard_margin_dimension"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:hint="@string/news_title_hint"
+        android:inputType="textMultiLine"
+        android:layout_below="@+id/add_news_title_heading"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/add_news_category_heading"
+        android:text="@string/select_news_category"
+        style="@style/text_view_body_style"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:gravity="left"
+        android:textSize="20sp"
+        android:layout_marginTop="@dimen/standard_margin_dimension"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:layout_below="@+id/newsTitle"/>
+
+    <RadioGroup
+        android:id="@+id/newsCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standard_margin_dimension"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:orientation="horizontal"
+        android:layout_below="@+id/add_news_category_heading">
+
+        <RadioButton
+            android:id="@+id/entertainment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/entertainment"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/sports_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sports"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/health_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/health"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/add_news_description_heading"
+        android:text="@string/enter_description"
+        style="@style/text_view_body_style"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/standard_margin_dimension"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:textSize="20sp"
+        android:layout_below="@+id/newsCategory" />
+
+    <EditText
+        android:id="@+id/newsDescription"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/standard_margin_dimension"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:layout_below="@+id/add_news_description_heading"
+        android:height="175dp"
+        style="@style/text_view_body_style"
+        android:hint="@string/enter_news_description_here"
+        android:inputType="textMultiLine"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical" />
+
+    <Button
+        android:id="@+id/button"
+        android:onClick="onClickSubmit"
+        android:text="@string/submit"
+        style="@style/button_style"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

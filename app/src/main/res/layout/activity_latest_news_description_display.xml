@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DescriptionDisplay"
+    android:orientation="vertical" >
+
+    <ProgressBar
+        android:id="@+id/latestDisplayGlideProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:visibility="visible" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/image_dimension"
+        android:id="@+id/latestDisplayImage"
+        android:adjustViewBounds="true"
+        android:layout_margin="@dimen/standard_margin_dimension"
+        android:contentDescription="@string/display_banner" />
+
+    <TextView
+        android:id="@+id/latestDisplayTitle"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:text="@string/placeholder_text"
+        android:gravity="center"
+        android:layout_alignBottom="@id/latestDisplayImage"
+        style="@style/text_view_style" />
+
+    <ScrollView
+        android:id="@+id/latestDisplayScrollView"
+        android:layout_below="@+id/latestDisplayImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="@dimen/standard_margin_dimension">
+
+        <TextView
+            android:id="@+id/latestDisplayDescription"
+            style="@style/text_view_body_style"
+            android:text="@string/placeholder_text"/>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/latestDisplayUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_text"
+        style="@style/text_view_body_style"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:layout_below="@+id/latestDisplayScrollView" />
+
+</RelativeLayout>

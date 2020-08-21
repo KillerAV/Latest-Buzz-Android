@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/newsCard"
+    android:layout_margin="@dimen/standard_margin_dimension">
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/glideProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_dimension"
+            android:id="@+id/newsImage"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/display_banner" />
+
+        <TextView
+            android:id="@+id/recycler_text_view"
+            style="@style/text_view_style"
+            android:layout_alignBottom="@+id/newsImage"
+            android:text="@string/placeholder_text" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

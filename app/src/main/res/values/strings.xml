@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Latest Buzz</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="category">CATEGORY</string>
+    <string name="title">TITLE</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="news_title_hint">Enter News Title..</string>
+    <string name="popular">Popular</string>
+    <string name="sports">Sports</string>
+    <string name="weather">Weather</string>
+    <string name="select_news_category">Select News Category:</string>
+    <string name="enter_news_description_here">Enter News Description here...</string>
+    <string name="submit">Submit</string>
+    <string name="placeholder_text">PLACEHOLDER TEXT</string>
+    <string name="add_news">ADD NEWS</string>
+    <string name="done">DONE</string>
+    <string name="update_news">UPDATE NEWS</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="health">Health</string>
+    <string name="display_banner">display banner</string>
+    <string name="invalid_title_message">Enter a valid title</string>
+    <string name="invalid_description_message">Enter a valid description</string>
+    <string name="app_info">App Info</string>
+    <string name="update_news_action">Update News</string>
+    <string name="change_country">Change Country</string>
+    <string name="toast_no_internet">No Internet Connection</string>
+    <string name="country_picker">Country Picker</string>
+    <string name="which_country_s_news_you_want_to_see">Which country\'s News you want to see?</string>
+    <string name="entertainment_news_tag">Entertainment</string>
+    <string name="sports_news_tag">Sports</string>
+    <string name="health_news_tag">Health</string>
+    <string name="update_news_header">Update News</string>
+    <string name="enter_description">Enter Description</string>
+    <string name="enter_title">Enter Title</string>
+    <string name="latest_news_alarm">Latest News Alarm</string>
+    <string name="logout">Logout</string>
+    <string name="delete_news_title">Delete News</string>
+    <string name="delete_news_message">Are you sure you want to delete the news?</string>
+    <string name="profile">Profile</string>
+    <string name="country">Country</string>
+    <string name="save">Save</string>
+    <string name="logout_dialogue_title">Logout?</string>
+    <string name="logout_dialogue_description">Do you want to Logout from the Latest Buzz</string>
+    <string name="dialogue_positive_label">YES</string>
+    <string name="dialogue_negative_label">NO</string>
+    <string name="notification_channel_description">Latest News Refreshed Notification</string>
+    <string name="error_signin_toast_message">\"Error occurred: \"</string>
+    <string name="alarm_notification_title">Bullet News Live</string>
+    <string name="alarm_notification_content">Top 30 Bullet News is Live</string>
+
+    <string-array name="country_array">
+        <item>India</item>
+        <item>USA</item>
+        <item>Argentina</item>
+        <item>Australia</item>
+        <item>Brazil</item>
+        <item>Germany</item>
+        <item>France</item>
+        <item>United Kingdom</item>
+        <item>Italy</item>
+        <item>South Korea</item>
+        <item>Malaysia</item>
+        <item>New Zealand</item>
+        <item>Russia</item>
+        <item>South Africa</item>
+    </string-array>
+</resources>

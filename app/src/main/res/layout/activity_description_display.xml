@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DescriptionDisplay"
+    android:orientation="vertical" >
+
+    <ProgressBar
+        android:id="@+id/displayGlideProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:visibility="visible" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/image_dimension"
+        android:id="@+id/displayImage"
+        android:adjustViewBounds="true"
+        android:layout_margin="@dimen/standard_margin_dimension"
+        android:contentDescription="@string/display_banner" />
+
+    <TextView
+        android:id="@+id/displayTitle"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:text="@string/placeholder_text"
+        android:gravity="center"
+        android:layout_alignBottom="@id/displayImage"
+        style="@style/text_view_style" />
+
+    <ScrollView
+        android:id="@+id/displayScrollView"
+        android:layout_below="@+id/displayImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="@dimen/standard_margin_dimension">
+
+        <TextView
+            android:id="@+id/displayDescription"
+            style="@style/text_view_body_style"
+            android:text="@string/placeholder_text"/>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/displayUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/placeholder_text"
+        style="@style/text_view_body_style"
+        android:layout_marginHorizontal="@dimen/standard_margin_dimension"
+        android:layout_below="@+id/displayScrollView" />
+
+    <Button
+        android:id="@+id/update_button"
+        android:text="@string/update_news"
+        android:layout_alignParentBottom="true"
+        style="@style/button_style"
+        android:onClick="onUpdateButtonClick"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.newsapplicationroom">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo_image"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo_image_circle"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+        <activity android:name=".SignIn">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".SignIn" />
+
+        <activity android:name=".ProfilePage"
+                  android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".bulletnews.LatestNewsDescriptionDisplay" />
+
+        <activity android:name=".bulletnews.LatestNews" />
+
+        <activity
+            android:name=".UpdateNews"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity android:name=".DescriptionDisplay" />
+
+        <service
+            android:name=".bulletnews.LatestNewsJobScheduler"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver
+            android:name=".bulletnews.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+    </application>
+
+</manifest>
