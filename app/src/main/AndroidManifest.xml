@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".SignIn">
+        <activity android:name=".ui.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,31 +22,31 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".SignIn" />
+            android:parentActivityName=".ui.SignInActivity" />
 
-        <activity android:name=".ProfilePage"
-                  android:parentActivityName=".MainActivity" />
+        <activity android:name=".ui.ProfilePageActivity"
+                  android:parentActivityName=".ui.MainActivity" />
 
-        <activity android:name=".bulletnews.LatestNewsDescriptionDisplay" />
+        <activity android:name=".ui.bulletnews.LatestNewsDescriptionDisplayActivity" />
 
-        <activity android:name=".bulletnews.LatestNews" />
+        <activity android:name=".ui.bulletnews.LatestNewsActivity" />
 
         <activity
-            android:name=".UpdateNews"
+            android:name=".ui.UpdateNewsActivity"
             android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".DescriptionDisplay" />
+        <activity android:name=".ui.DescriptionDisplayActivity" />
 
         <service
-            android:name=".bulletnews.LatestNewsJobScheduler"
+            android:name=".ui.bulletnews.LatestNewsJobScheduler"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
-            android:name=".bulletnews.AlarmReceiver"
+            android:name=".ui.bulletnews.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
 
