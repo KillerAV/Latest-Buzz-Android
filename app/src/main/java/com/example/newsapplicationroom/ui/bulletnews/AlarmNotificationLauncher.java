@@ -14,6 +14,7 @@ import com.example.newsapplicationroom.utils.Constants;
 import com.example.newsapplicationroom.R;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -21,10 +22,13 @@ public class AlarmNotificationLauncher {
 
     private NotificationManager notificationManager;
     private Context context;
+    private String fromDate, toDate;
 
     @Inject
-    public AlarmNotificationLauncher(Context context) {
+    public AlarmNotificationLauncher(Context context, @Named("fromDate") String fromDate, @Named("toDate") String toDate) {
         this.context = context;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
     }
 
     private void getNotificationChannel() {
@@ -55,6 +59,10 @@ public class AlarmNotificationLauncher {
         getNotificationChannel();
 
         Intent intent = new Intent(context, LatestNewsActivity.class);
+        intent.putExtra(Constants.EXTRA_IS_ALARM_LAUNCHED, true);
+        intent.putExtra(Constants.EXTRA_FROM_DATE, fromDate);
+        intent.putExtra(Constants.EXTRA_TO_DATE, toDate);
+
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(context, Constants.ALARM_NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

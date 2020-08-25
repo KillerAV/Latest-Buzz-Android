@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -33,6 +34,14 @@ public class LatestNewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_latest_news);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        boolean updateDatabase = intent.getBooleanExtra(Constants.EXTRA_IS_ALARM_LAUNCHED, false);
+        if(updateDatabase) {
+            String fromDate = intent.getStringExtra(Constants.EXTRA_FROM_DATE);
+            String toDate = intent.getStringExtra(Constants.EXTRA_FROM_DATE);
+            populateLatestNewsDatabase(fromDate, toDate);
+        }
+
         latestNewsViewModel = ViewModelProviders.of(this).get(LatestNewsViewModel.class);
 
         final LatestNewsAdapter adapter = DaggerAdapterComponent.builder().setContext(this).build().getLatestNewsAdapter();
@@ -42,7 +51,7 @@ public class LatestNewsActivity extends AppCompatActivity {
         latestNewsViewModel.getLatestNews().observe(this, latestNewsEntities -> adapter.setListOfNews(latestNewsEntities));
     }
 
-    public static void populateLatestNewsDatabase(String fromDate, String toDate) {
+    private static void populateLatestNewsDatabase(String fromDate, String toDate) {
         for (String country : Constants.COUNTRY_CODE.values()) {
             latestNewsViewModel.populateLatestNews(country, fromDate, toDate);
         }

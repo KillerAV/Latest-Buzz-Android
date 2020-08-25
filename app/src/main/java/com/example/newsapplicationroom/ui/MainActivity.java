@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private static FirebaseUser firebaseUser;
     private static AdapterComponent adapterComponent;
     private static UserInfoEntity userInfoEntity;
+    public static boolean isAlarmLaunched = false;
+    public static String fromDate, toDate;
 
     FirebaseAnalytics firebaseAnalytics;
 
@@ -104,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Latest News");
             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             Intent intent = new Intent(this, LatestNewsActivity.class);
+            intent.putExtra(Constants.EXTRA_IS_ALARM_LAUNCHED, isAlarmLaunched);
+            intent.putExtra(Constants.EXTRA_FROM_DATE, fromDate);
+            intent.putExtra(Constants.EXTRA_TO_DATE, toDate);
+            isAlarmLaunched = false;
             startActivity(intent);
             return true;
         } else if (id == R.id.action_profile) {
@@ -113,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(Constants.EXTRA_EMAIL_ID, firebaseUser.getEmail());
             intent.putExtra(Constants.EXTRA_PROFILE_PICTURE, firebaseUser.getPhotoUrl());
             startActivityForResult(intent, Constants.PROFILE_UPDATE_REQUEST_CODE);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -172,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
         while (triggerTime < System.currentTimeMillis()) {
             triggerTime += repeatInterval;
         }
-
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, triggerTime, repeatInterval, pendingIntent);
     }
 

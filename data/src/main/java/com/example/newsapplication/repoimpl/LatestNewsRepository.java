@@ -31,7 +31,6 @@ public class LatestNewsRepository implements ILatestNewsRepository {
 
     @Override
     public void populateLatestNews(String country, String fromDate, String toDate) {
-        new DeleteLatestNewsAsync(newsDao).execute();
         new NewsApiLatestAsync().execute(country, fromDate, toDate);
     }
 
@@ -49,9 +48,12 @@ public class LatestNewsRepository implements ILatestNewsRepository {
                         if (response.isSuccessful()) {
                             NewsApiData newsApiData = response.body();
                             List<LatestNewsEntity> latestNewsEntities = LatestNewsMapper.ToLatestNewsEntity(newsApiData, s);
-
-                            for(LatestNewsEntity latestNewsEntity : latestNewsEntities) {
-                                new insertLatestAsync(newsDao).execute(latestNewsEntity);
+                            if(latestNewsEntities.size() != 0)
+                            {
+                                new DeleteLatestNewsAsync(newsDao).execute();
+                                for(LatestNewsEntity latestNewsEntity : latestNewsEntities) {
+                                    new insertLatestAsync(newsDao).execute(latestNewsEntity);
+                                }
                             }
                         }
                     }

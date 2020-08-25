@@ -16,6 +16,9 @@ public class Constants {
     public static final String EXTRA_PROFILE_PICTURE = "user profile picture";
     public static final String EXTRA_URL = "url";
     public static final String EXTRA_COUNTRY_NAME = "country";
+    public static final String EXTRA_IS_ALARM_LAUNCHED = "alarm launched";
+    public static final String EXTRA_FROM_DATE = "from date";
+    public static final String EXTRA_TO_DATE = "to date";
 
     public static final int UPDATE_NEWS_REQUEST_CODE = 2;
     public static final int PROFILE_UPDATE_REQUEST_CODE = 1;

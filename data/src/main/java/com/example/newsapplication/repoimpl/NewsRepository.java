@@ -34,7 +34,6 @@ public class NewsRepository implements INewsRepository {
 
     @Override
     public void populateDatabase(String country) {
-        new DeleteAllAsync(newsDao).execute();
         new NewsApiAsync().execute(country);
     }
 
@@ -79,8 +78,11 @@ public class NewsRepository implements INewsRepository {
                     NewsApiData newsApiData = response.body();
 
                     List<NewsEntity> newsEntities = NewsMapper.ToNewsEntity(newsApiData, s);
-                    for(NewsEntity newsEntity : newsEntities) {
-                        new insertAsync(newsDao).execute(newsEntity);
+                    if(newsEntities.size() != 0) {
+                        new DeleteAllAsync(newsDao).execute();
+                        for (NewsEntity newsEntity : newsEntities) {
+                            new insertAsync(newsDao).execute(newsEntity);
+                        }
                     }
 
                     String totalRecords = newsApiData.getTotalResults();

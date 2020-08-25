@@ -3,13 +3,12 @@ package com.example.newsapplicationroom.ui.bulletnews;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 
-import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-
 import com.example.newsapplicationroom.di.component.AlarmNotificationComponent;
 import com.example.newsapplicationroom.di.component.DaggerAlarmNotificationComponent;
+import com.example.newsapplicationroom.ui.MainActivity;
 import com.example.newsapplicationroom.utils.Constants;
 
 import java.text.DateFormat;
@@ -22,36 +21,21 @@ public class LatestNewsJobScheduler extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters params) {
-        new PopulateDatabaseAsync(this).execute(params);
-        return true;
-    }
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        df.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date currDate = new Date();
+        MainActivity.toDate = df.format(currDate);
+        Date prevDate = new Date(currDate.getTime() - Constants.MILLISECONDS_IN_A_DAY);
+        MainActivity.fromDate = df.format(prevDate);
+        AlarmNotificationComponent alarmNotificationComponent = DaggerAlarmNotificationComponent.builder()
+                .setContext(this)
+                .setFromDate(MainActivity.fromDate)
+                .setToDate(MainActivity.toDate)
+                .build();
+        alarmNotificationComponent.getAlarmNotificationLauncher().displayNotification();
 
-    private static class PopulateDatabaseAsync extends AsyncTask<JobParameters, Void, JobParameters> {
-
-        private final JobService jobService;
-
-        public PopulateDatabaseAsync(JobService jobService) {
-            this.jobService = jobService;
-        }
-
-        @Override
-        protected JobParameters doInBackground(JobParameters... jobParameters) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            df.setTimeZone(TimeZone.getTimeZone("UTC"));
-            Date currDate = new Date();
-            String toDate = df.format(currDate);
-            Date prevDate = new Date(currDate.getTime() - Constants.MILLISECONDS_IN_A_DAY);
-            String fromDate = df.format(prevDate);
-            LatestNewsActivity.populateLatestNewsDatabase(fromDate, toDate);
-            return jobParameters[0];
-        }
-
-        @Override
-        protected void onPostExecute(JobParameters jobParameters) {
-            jobService.jobFinished(jobParameters, false);
-            AlarmNotificationComponent alarmNotificationComponent = DaggerAlarmNotificationComponent.builder().setContext(jobService).build();
-            alarmNotificationComponent.getAlarmNotificationLauncher().displayNotification();
-        }
+        MainActivity.isAlarmLaunched = true;
+        return false;
     }
 
     @Override
