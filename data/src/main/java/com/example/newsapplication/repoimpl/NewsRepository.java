@@ -17,6 +17,8 @@ import com.newsapplicationroom.repository.INewsRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +29,7 @@ import static java.lang.Math.min;
 public class NewsRepository implements INewsRepository {
     private NewsDao newsDao;
 
+    @Inject
     public NewsRepository(Application application) {
         NewsRoomDatabase newsRoomDatabase = NewsRoomDatabase.getDatabaseInstance(application.getApplicationContext());
         newsDao = newsRoomDatabase.newsDao();

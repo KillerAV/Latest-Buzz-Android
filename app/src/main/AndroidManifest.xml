@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".ui.NewsApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo_image"
         android:label="@string/app_name"
@@ -14,27 +15,41 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".ui.SplashScreenActivity">
+        <activity
+            android:name=".ui.SplashScreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SignInActivity" />
+        <activity
+            android:name=".ui.SignInActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.SignInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.ProfilePageActivity"
-            android:parentActivityName=".ui.MainActivity" />
-        <activity android:name=".ui.bulletnews.LatestNewsDescriptionDisplayActivity" />
-        <activity android:name=".ui.bulletnews.LatestNewsActivity" />
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.bulletnews.LatestNewsDescriptionDisplayActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".ui.bulletnews.LatestNewsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.UpdateNewsActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.DescriptionDisplayActivity" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.DescriptionDisplayActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".ui.bulletnews.LatestNewsJobScheduler"

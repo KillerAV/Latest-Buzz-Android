@@ -2,6 +2,7 @@ package com.example.newsapplicationroom.di.component;
 
 import android.content.Context;
 
+import com.example.newsapplicationroom.di.scope.ActivityScope;
 import com.example.newsapplicationroom.ui.bulletnews.AlarmNotificationLauncher;
 
 import javax.inject.Named;
@@ -10,6 +11,7 @@ import dagger.BindsInstance;
 import dagger.Component;
 
 @Component
+@ActivityScope
 public interface AlarmNotificationComponent {
     AlarmNotificationLauncher getAlarmNotificationLauncher();
 
