@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.newsapplicationroom.di.component.DaggerNewsCategoryComponent;
+import com.example.newsapplicationroom.ui.NewsApplication;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,11 +21,11 @@ public class NewsPagerAdapter extends FragmentStatePagerAdapter {
 
     public Fragment getItem(int position) {
         if (position == 0) {
-            return DaggerNewsCategoryComponent.create().getEntertainmentNews();
+            return NewsApplication.getNewsCategoryComponent().getEntertainmentNews();
         } else if (position == 1) {
-            return DaggerNewsCategoryComponent.create().getSportsNews();
+            return NewsApplication.getNewsCategoryComponent().getSportsNews();
         } else {
-            return DaggerNewsCategoryComponent.create().getHealthNews();
+            return NewsApplication.getNewsCategoryComponent().getHealthNews();
         }
     }
 

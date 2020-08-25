@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.newsapplicationroom.di.component.DaggerAdapterComponent;
+import com.example.newsapplicationroom.ui.MainActivity;
 import com.example.newsapplicationroom.ui.adapter.LatestNewsAdapter;
 
 import com.example.newsapplicationroom.viewmodel.LatestNewsViewModel;
@@ -34,6 +36,8 @@ public class LatestNewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_latest_news);
         ButterKnife.bind(this);
 
+        latestNewsViewModel = ViewModelProviders.of(this).get(LatestNewsViewModel.class);
+
         Intent intent = getIntent();
         boolean updateDatabase = intent.getBooleanExtra(Constants.EXTRA_IS_ALARM_LAUNCHED, false);
         if(updateDatabase) {
@@ -41,8 +45,6 @@ public class LatestNewsActivity extends AppCompatActivity {
             String toDate = intent.getStringExtra(Constants.EXTRA_FROM_DATE);
             populateLatestNewsDatabase(fromDate, toDate);
         }
-
-        latestNewsViewModel = ViewModelProviders.of(this).get(LatestNewsViewModel.class);
 
         final LatestNewsAdapter adapter = DaggerAdapterComponent.builder().setContext(this).build().getLatestNewsAdapter();
         recyclerView.setAdapter(adapter);
@@ -52,8 +54,10 @@ public class LatestNewsActivity extends AppCompatActivity {
     }
 
     private static void populateLatestNewsDatabase(String fromDate, String toDate) {
+        Log.d("Abhishek", "HERE");
         for (String country : Constants.COUNTRY_CODE.values()) {
             latestNewsViewModel.populateLatestNews(country, fromDate, toDate);
         }
+        MainActivity.isAlarmLaunched = false;
     }
 }

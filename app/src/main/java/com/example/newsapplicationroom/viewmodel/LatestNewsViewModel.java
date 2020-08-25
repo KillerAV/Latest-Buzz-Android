@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.newsapplication.repoimpl.LatestNewsRepository;
+import com.example.newsapplicationroom.ui.NewsApplication;
 import com.newsapplicationroom.entity.LatestNewsEntity;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class LatestNewsViewModel extends AndroidViewModel {
 
     public LatestNewsViewModel(@NonNull Application application) {
         super(application);
-        latestNewsRepository = new LatestNewsRepository(application);
+        latestNewsRepository = NewsApplication.getRoomDatabaseComponent().getLatestNewsRepository();
     }
     public LiveData<List<LatestNewsEntity>> getLatestNews() {
         return latestNewsRepository.getLatestNews();

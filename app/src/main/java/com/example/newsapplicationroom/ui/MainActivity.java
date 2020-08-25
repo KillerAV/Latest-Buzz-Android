@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(Constants.EXTRA_IS_ALARM_LAUNCHED, isAlarmLaunched);
             intent.putExtra(Constants.EXTRA_FROM_DATE, fromDate);
             intent.putExtra(Constants.EXTRA_TO_DATE, toDate);
-            isAlarmLaunched = false;
             startActivity(intent);
             return true;
         } else if (id == R.id.action_profile) {
@@ -198,15 +197,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class InitialiseInformationAsync extends AsyncTask<Void, Void, Void> {
-
         private List<UserInfoEntity> userInfoEntities;
-
         @Override
         protected Void doInBackground(Void... voids) {
             userInfoEntities = userInformationViewModel.getUserInformation(firebaseUser.getEmail());
             return null;
         }
-
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
