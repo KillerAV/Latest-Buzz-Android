@@ -31,26 +31,21 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        userInformationViewModel = ViewModelProviders.of(this).get(UserInformationViewModel.class);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        if (firebaseUser != null) {
-            startActivity(new Intent(this, MainActivity.class));
-        } else {
-            // Choose authentication providers
-            List<AuthUI.IdpConfig> providers = Arrays.asList(
-                    new AuthUI.IdpConfig.GoogleBuilder().build(),
-                    new AuthUI.IdpConfig.EmailBuilder().build());
+        // Choose authentication providers
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                new AuthUI.IdpConfig.EmailBuilder().build());
 
-            // Create and launch sign-in intent
-            startActivityForResult(AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setAvailableProviders(providers)
-                    .setLogo(R.drawable.logo_image)
-                    .setTheme(R.style.LoginTheme)
-                    .build(), Constants.SIGN_IN_REQUEST_CODE);
-        }
-        userInformationViewModel = ViewModelProviders.of(this).get(UserInformationViewModel.class);
+        // Create and launch sign-in intent
+        startActivityForResult(AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setLogo(R.drawable.logo_image)
+                .setTheme(R.style.LoginTheme)
+                .build(), Constants.SIGN_IN_REQUEST_CODE);
     }
 
     @Override
@@ -72,7 +67,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private class AddInformationToDatabaseAsync extends AsyncTask<Void, Void, Void> {
-
         @Override
         protected Void doInBackground(Void... voids) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -80,12 +74,12 @@ public class SignInActivity extends AppCompatActivity {
             userInformationViewModel.insertUserInformation(userInfoEntity);
             return null;
         }
-
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

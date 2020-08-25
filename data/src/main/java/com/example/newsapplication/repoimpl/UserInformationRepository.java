@@ -57,7 +57,8 @@ public class UserInformationRepository implements IUserInformationRepository {
 
         @Override
         protected Void doInBackground(UserInfoEntity... userInfoEntities) {
-            if (newsDao.getOneUserInformation(userInfoEntities[0].getEmailId()).size() < 1) {
+            List<UserInfoEntity> userInfoEntityList = newsDao.getOneUserInformation(userInfoEntities[0].getEmailId());
+            if (userInfoEntityList.size() == 0) {
                 newsDao.insertUserInformation(userInfoEntities[0]);
             }
             return null;

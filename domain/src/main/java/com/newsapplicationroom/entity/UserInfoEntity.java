@@ -2,6 +2,7 @@ package com.newsapplicationroom.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.OnConflictStrategy;
 import androidx.room.PrimaryKey;
 
 import com.newsapplicationroom.utils.Constants;

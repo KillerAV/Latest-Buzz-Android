@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
+    public static final int SPLASH_TIME_OUT = 1000;
+
     public static final String EXTRA_TITLE = "title message";
     public static final String EXTRA_CATEGORY = "category message";
     public static final String EXTRA_DESCRIPTION = "description message";

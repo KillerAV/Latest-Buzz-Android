@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static NewsViewModel newsViewModel;
     private static UserInformationViewModel userInformationViewModel;
-    private static String country;
     private static FirebaseUser firebaseUser;
     private static AdapterComponent adapterComponent;
+    private static UserInfoEntity userInfoEntity;
 
     FirebaseAnalytics firebaseAnalytics;
 
@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
         userInformationViewModel = ViewModelProviders.of(this).get(UserInformationViewModel.class);
-
         new InitialiseInformationAsync().execute();
         initialiseToolbar();
         createAlarm();
@@ -81,9 +80,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.PROFILE_UPDATE_REQUEST_CODE && resultCode == RESULT_OK) {
-            country = data.getStringExtra(Constants.EXTRA_COUNTRY_NAME);
+            String country = data.getStringExtra(Constants.EXTRA_COUNTRY_NAME);
             fetchNews(country);
-            UserInfoEntity userInfoEntity = getUserInfoEntity();
             userInfoEntity.setCountry(country);
             userInformationViewModel.updateUserInformation(userInfoEntity);
         }
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_update_news) {
-            fetchNews(country);
+            fetchNews(userInfoEntity.getCountry());
             return true;
         } else if (id == R.id.action_latest_news_alarm) {
             Bundle bundle = new Bundle();
@@ -110,12 +108,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_profile) {
             Intent intent = new Intent(this, ProfilePageActivity.class);
-            intent.putExtra(Constants.EXTRA_COUNTRY_NAME, country);
+            intent.putExtra(Constants.EXTRA_COUNTRY_NAME, userInfoEntity.getCountry());
             intent.putExtra(Constants.EXTRA_USER_NAME, firebaseUser.getDisplayName());
             intent.putExtra(Constants.EXTRA_EMAIL_ID, firebaseUser.getEmail());
             intent.putExtra(Constants.EXTRA_PROFILE_PICTURE, firebaseUser.getPhotoUrl());
             startActivityForResult(intent, Constants.PROFILE_UPDATE_REQUEST_CODE);
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -126,12 +123,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static AdapterComponent getAdapterComponent() {
         return adapterComponent;
-    }
-
-    private static UserInfoEntity getUserInfoEntity() {
-        String email = firebaseUser.getEmail();
-        String name = firebaseUser.getDisplayName();
-        return new UserInfoEntity(email, name);
     }
 
     private void initialiseToolbar() {
@@ -213,7 +204,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            country = userInfoEntities.get(0).getCountry();
+            userInfoEntity = userInfoEntities.get(0);
+            String country = userInfoEntity.getCountry();
             fetchNews(country);
         }
     }

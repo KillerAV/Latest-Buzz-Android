@@ -48,7 +48,7 @@ public interface NewsDao {
     @Update
     void updateUserInformation(UserInfoEntity userInfoEntity);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertUserInformation(UserInfoEntity userInfoEntity);
 
     @Query(Constants.GET_ONE_USER_INFORMATION)

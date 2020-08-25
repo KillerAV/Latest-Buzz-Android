@@ -19,7 +19,7 @@ public class Constants {
     public static final String GET_LATEST_NEWS = "SELECT * FROM Latest_News";
     public static final String DELETE_ALL_LATEST_NEWS = "DELETE FROM Latest_News";
     public static final String GET_USER_INFORMATION = "SELECT * FROM User_Information WHERE emailId = :emailId";
-    public static final String GET_ONE_USER_INFORMATION = "SELECT * FROM USER_INFORMATION WHERE emailId = :emailId LIMIT 1";
+    public static final String GET_ONE_USER_INFORMATION = "SELECT * FROM User_Information WHERE emailId = :emailId LIMIT 1";
 
     //Room Database
     public static final String DATABASE_NAME = "News Database";

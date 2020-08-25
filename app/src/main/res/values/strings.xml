@@ -52,6 +52,8 @@
     <string name="error_signin_toast_message">\"Error occurred: \"</string>
     <string name="alarm_notification_title">Bullet News Live</string>
     <string name="alarm_notification_content">Top 30 Bullet News is Live</string>
+    <string name="splash_screen_heading">LATEST BUZZ</string>
+    <string name="splash_screen_sub_heading">Let\'s Stay Updated</string>
 
     <string-array name="country_array">
         <item>India</item>
@@ -63,8 +65,6 @@
         <item>France</item>
         <item>United Kingdom</item>
         <item>Italy</item>
-        <item>South Korea</item>
-        <item>Malaysia</item>
         <item>New Zealand</item>
         <item>Russia</item>
         <item>South Africa</item>
