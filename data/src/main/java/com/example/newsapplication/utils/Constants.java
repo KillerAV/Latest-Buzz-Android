@@ -25,6 +25,6 @@ public class Constants {
     public static final String DATABASE_NAME = "News Database";
     public static final int MAX_NUMBER_OF_PAGES_LIMIT = 1;  //Set this to 3
     public static final String[] category = {"entertainment", "sports", "health"};
-    public static final String[] latestNewsCategory = {"business", "entertainment", "health", "science", "sports", "technology"};
-    public static final String LATEST_NEWS_PAGE_SIZE = "3";
+    public static final String LATEST_NEWS_PAGE_SIZE = "10";
+    public static final String GENERAL_CATEGORY_NEWS_LABEL = "general";
 }

@@ -17,6 +17,8 @@ import com.newsapplicationroom.repository.ILatestNewsRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +26,7 @@ import retrofit2.Response;
 public class LatestNewsRepository implements ILatestNewsRepository {
     private NewsDao newsDao;
 
+    @Inject
     public LatestNewsRepository(Application application) {
         NewsRoomDatabase newsRoomDatabase = NewsRoomDatabase.getDatabaseInstance(application.getApplicationContext());
         newsDao = newsRoomDatabase.newsDao();
@@ -41,54 +44,37 @@ public class LatestNewsRepository implements ILatestNewsRepository {
     private class NewsApiLatestAsync extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... strings) {
-            for (final String s : Constants.latestNewsCategory) {
-                Callback<NewsApiData> responseCallback = new Callback<NewsApiData>() {
-                    @Override
-                    public void onResponse(Call<NewsApiData> call, Response<NewsApiData> response) {
-                        if (response.isSuccessful()) {
-                            NewsApiData newsApiData = response.body();
-                            List<LatestNewsEntity> latestNewsEntities = LatestNewsMapper.ToLatestNewsEntity(newsApiData, s);
-                            if(latestNewsEntities.size() != 0)
-                            {
-                                new DeleteLatestNewsAsync(newsDao).execute();
-                                for(LatestNewsEntity latestNewsEntity : latestNewsEntities) {
-                                    new insertLatestAsync(newsDao).execute(latestNewsEntity);
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<NewsApiData> call, Throwable t) {
-                        Log.e(NewsApiHandling.class.getSimpleName(), t.getMessage());
-                    }
-                };
-                NewsApiHandling.getLatestNewsUsingApiCall(strings[0], s, strings[1], strings[2], Constants.LATEST_NEWS_PAGE_SIZE, responseCallback);
-            }
-            return null;
-        }
-    }
-
-    private static class DeleteLatestNewsAsync extends AsyncTask<Void, Void, Void> {
-        private NewsDao newsDao;
-        public DeleteLatestNewsAsync(NewsDao newsDao) {
-            this.newsDao = newsDao;
-        }
-        @Override
-        protected Void doInBackground(Void... voids) {
             newsDao.deleteLatestNews();
+            Callback<NewsApiData> responseCallback = new Callback<NewsApiData>() {
+                @Override
+                public void onResponse(Call<NewsApiData> call, Response<NewsApiData> response) {
+                    if (response.isSuccessful()) {
+                        NewsApiData newsApiData = response.body();
+                        List<LatestNewsEntity> latestNewsEntities = LatestNewsMapper.ToLatestNewsEntity(newsApiData, Constants.GENERAL_CATEGORY_NEWS_LABEL);
+                        new populateDatabaseAsync(newsDao).execute(latestNewsEntities);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<NewsApiData> call, Throwable t) {
+                    Log.e(NewsApiHandling.class.getSimpleName(), t.getMessage());
+                }
+            };
+            NewsApiHandling.getLatestNewsUsingApiCall(strings[0], Constants.GENERAL_CATEGORY_NEWS_LABEL, strings[1], strings[2], Constants.LATEST_NEWS_PAGE_SIZE, responseCallback);
             return null;
         }
     }
 
-    private static class insertLatestAsync extends AsyncTask<LatestNewsEntity, Void, Void> {
+    private static class populateDatabaseAsync extends AsyncTask<List<LatestNewsEntity>, Void, Void> {
         NewsDao newsDao;
-        public insertLatestAsync(NewsDao newsDao) {
+        public populateDatabaseAsync(NewsDao newsDao) {
             this.newsDao = newsDao;
         }
         @Override
-        protected Void doInBackground(LatestNewsEntity... newsEntities) {
-            newsDao.insertLatestNews(newsEntities[0]);
+        protected Void doInBackground(List<LatestNewsEntity>... lists) {
+            for (LatestNewsEntity latestNewsEntity : lists[0]) {
+                newsDao.insertLatestNews(latestNewsEntity);
+            }
             return null;
         }
     }

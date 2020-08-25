@@ -17,6 +17,8 @@ import com.newsapplicationroom.repository.INewsRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,6 +29,7 @@ import static java.lang.Math.min;
 public class NewsRepository implements INewsRepository {
     private NewsDao newsDao;
 
+    @Inject
     public NewsRepository(Application application) {
         NewsRoomDatabase newsRoomDatabase = NewsRoomDatabase.getDatabaseInstance(application.getApplicationContext());
         newsDao = newsRoomDatabase.newsDao();
@@ -58,9 +61,7 @@ public class NewsRepository implements INewsRepository {
                 if (response.isSuccessful()) {
                     NewsApiData newsApiData = response.body();
                     List<NewsEntity> newsEntities = NewsMapper.ToNewsEntity(newsApiData, s);
-                    for(NewsEntity newsEntity : newsEntities) {
-                        new insertAsync(newsDao).execute(newsEntity);
-                    }
+                    new populateDatabaseAsync(newsDao).execute(newsEntities);
                 }
             }
             @Override
@@ -78,18 +79,13 @@ public class NewsRepository implements INewsRepository {
                     NewsApiData newsApiData = response.body();
 
                     List<NewsEntity> newsEntities = NewsMapper.ToNewsEntity(newsApiData, s);
-                    if(newsEntities.size() != 0) {
-                        new DeleteAllAsync(newsDao).execute();
-                        for (NewsEntity newsEntity : newsEntities) {
-                            new insertAsync(newsDao).execute(newsEntity);
-                        }
-                    }
+                    new populateDatabaseAsync(newsDao).execute(newsEntities);
 
                     String totalRecords = newsApiData.getTotalResults();
                     int defaultPageSize = 20;
                     int numberOfPages = (int) ceil(Double.parseDouble(totalRecords) / defaultPageSize);
                     for (int page = 2; page <= min(numberOfPages, Constants.MAX_NUMBER_OF_PAGES_LIMIT); page++) {
-                        NewsApiHandling.getNewsUsingApiCall(country, s, page + "", getNormalPageResponseCallback(newsDao, s));
+                        NewsApiHandling.getNewsUsingApiCall(country, s,page + "", getNormalPageResponseCallback(newsDao, s));
                     }
                 }
             }
@@ -104,49 +100,33 @@ public class NewsRepository implements INewsRepository {
     private class NewsApiAsync extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... strings) {
+            newsDao.deleteAllNews();
             for (final String s : Constants.category) {
-                NewsApiHandling.getNewsUsingApiCall(strings[0], s, "1", getFirstPageResponseCallback(strings[0], newsDao, s));
+                NewsApiHandling.getNewsUsingApiCall(strings[0], s,"1", getFirstPageResponseCallback(strings[0], newsDao, s));
             }
             return null;
         }
     }
 
-    private static class DeleteAllAsync extends AsyncTask<Void, Void, Void> {
-
-        private NewsDao newsDao;
-
-        public DeleteAllAsync(NewsDao newsDao) {
+    private static class populateDatabaseAsync extends AsyncTask<List<NewsEntity>, Void, Void> {
+        NewsDao newsDao;
+        public populateDatabaseAsync(NewsDao newsDao) {
             this.newsDao = newsDao;
         }
-
         @Override
-        protected Void doInBackground(Void... voids) {
-            newsDao.deleteAllNews();
-            return null;
-        }
-    }
-
-    private static class insertAsync extends AsyncTask<NewsEntity, Void, Void> {
-        private final NewsDao newsDao;
-
-        public insertAsync(NewsDao newsDao) {
-            this.newsDao = newsDao;
-        }
-
-        @Override
-        protected Void doInBackground(NewsEntity... newsEntities) {
-            newsDao.insertNews(newsEntities[0]);
+        protected Void doInBackground(List<NewsEntity>... lists) {
+            for (NewsEntity newsEntity : lists[0]) {
+                newsDao.insertNews(newsEntity);
+            }
             return null;
         }
     }
 
     private static class deleteAsync extends AsyncTask<NewsEntity, Void, Void> {
         private final NewsDao newsDao;
-
         public deleteAsync(NewsDao newsDao) {
             this.newsDao = newsDao;
         }
-
         @Override
         protected Void doInBackground(NewsEntity... newsEntities) {
             newsDao.deleteNews(newsEntities[0]);
@@ -156,11 +136,9 @@ public class NewsRepository implements INewsRepository {
 
     private static class updateAsync extends AsyncTask<NewsEntity, Void, Void> {
         private final NewsDao newsDao;
-
         public updateAsync(NewsDao newsDao) {
             this.newsDao = newsDao;
         }
-
         @Override
         protected Void doInBackground(NewsEntity... newsEntities) {
             newsDao.updateNews(newsEntities[0]);

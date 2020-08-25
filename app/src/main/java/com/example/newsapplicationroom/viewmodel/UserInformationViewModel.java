@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.newsapplication.repoimpl.UserInformationRepository;
+import com.example.newsapplicationroom.ui.NewsApplication;
 import com.newsapplicationroom.entity.UserInfoEntity;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class UserInformationViewModel extends AndroidViewModel {
 
     public UserInformationViewModel(@NonNull Application application) {
         super(application);
-        userNewsRepository = new UserInformationRepository(application);
+        userNewsRepository = NewsApplication.getRoomDatabaseComponent().getUserInformationRepository();
     }
     public List<UserInfoEntity> getUserInformation(String email) {
         return userNewsRepository.getUserInformation(email);

@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.newsapplication.repoimpl.NewsRepository;
+import com.example.newsapplicationroom.ui.NewsApplication;
 import com.newsapplicationroom.entity.NewsEntity;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class NewsViewModel extends AndroidViewModel {
 
     public NewsViewModel(@NonNull Application application) {
         super(application);
-        newsRepository = new NewsRepository(application);
+        newsRepository = NewsApplication.getRoomDatabaseComponent().getNewsRepository();
     }
 
     public void deleteNews(NewsEntity newsEntity) {
