@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.newsapplicationroom.utils.Constants;
+import com.newsapplicationroom.utils.DomainConstants;
 
-@Entity(tableName = Constants.NEWS_TABLE_NAME)
+@Entity(tableName = DomainConstants.NEWS_TABLE_NAME)
 public class NewsEntity {
 
     @PrimaryKey(autoGenerate = true)

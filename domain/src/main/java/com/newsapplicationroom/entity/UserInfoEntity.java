@@ -2,13 +2,11 @@ package com.newsapplicationroom.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.OnConflictStrategy;
 import androidx.room.PrimaryKey;
 
-import com.newsapplicationroom.utils.Constants;
+import com.newsapplicationroom.utils.DomainConstants;
 
-
-@Entity(tableName = Constants.USER_INFO_TABLE_NAME)
+@Entity(tableName = DomainConstants.USER_INFO_TABLE_NAME)
 public class UserInfoEntity {
     @PrimaryKey
     @NonNull
@@ -23,7 +21,7 @@ public class UserInfoEntity {
     public UserInfoEntity(@NonNull String emailId, @NonNull String name) {
         this.emailId = emailId;
         this.name = name;
-        this.country = Constants.DEFAULT_COUNTRY;
+        this.country = DomainConstants.DEFAULT_COUNTRY;
     }
 
     public void setCountry(@NonNull String country) {
