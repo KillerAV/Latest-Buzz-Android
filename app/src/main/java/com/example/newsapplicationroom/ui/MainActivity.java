@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -116,7 +117,11 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(Constants.EXTRA_COUNTRY_NAME, userInfoEntity.getCountry());
             intent.putExtra(Constants.EXTRA_USER_NAME, firebaseUser.getDisplayName());
             intent.putExtra(Constants.EXTRA_EMAIL_ID, firebaseUser.getEmail());
-            intent.putExtra(Constants.EXTRA_PROFILE_PICTURE, firebaseUser.getPhotoUrl());
+            Uri photoUri = firebaseUser.getPhotoUrl();
+            if(photoUri == null)
+                intent.putExtra(Constants.EXTRA_PROFILE_PICTURE, Constants.PLACEHOLDER_STRING);
+            else
+                intent.putExtra(Constants.EXTRA_PROFILE_PICTURE, photoUri.toString());
             startActivityForResult(intent, Constants.PROFILE_UPDATE_REQUEST_CODE);
             return true;
         }
