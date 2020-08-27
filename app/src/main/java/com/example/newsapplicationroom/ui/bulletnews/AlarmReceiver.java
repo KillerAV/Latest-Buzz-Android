@@ -1,5 +1,7 @@
 package com.example.newsapplicationroom.ui.bulletnews;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
@@ -27,6 +29,12 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setExtras(bundle);
 
+        PendingIntent pendingIntent
+                = PendingIntent.getBroadcast(context,
+                Constants.ALARM_PENDING_INTENT_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + Constants.ALARM_REPEAT_INTERVAL, pendingIntent);
         jobScheduler.schedule(builder.build());
     }
 }

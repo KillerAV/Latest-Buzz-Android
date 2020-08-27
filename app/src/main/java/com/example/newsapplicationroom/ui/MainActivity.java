@@ -169,13 +169,13 @@ public class MainActivity extends AppCompatActivity {
                 Constants.ALARM_PENDING_INTENT_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        long repeatInterval = AlarmManager.INTERVAL_DAY;
+
         Calendar day = DateUtils.getCalenderDay(0, 0, 0, 8);
         long triggerTime = day.getTimeInMillis();
         while (triggerTime < System.currentTimeMillis()) {
-            triggerTime += repeatInterval;
+            triggerTime += Constants.ALARM_REPEAT_INTERVAL;
         }
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, triggerTime, repeatInterval, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
     }
 
     private void fetchNews(String country) {
