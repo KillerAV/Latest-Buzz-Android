@@ -45,10 +45,8 @@ public class Constants {
             put("Brazil", "br");
             put("Germany", "de");
             put("France", "fr");
-            put("United Kingdom", "gb");
             put("Italy", "it");
             put("New Zealand", "nz");
-            put("Russia", "ru");
             put("South Africa", "za");
         }
     };

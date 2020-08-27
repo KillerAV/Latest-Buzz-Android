@@ -3,6 +3,7 @@ package com.example.newsapplicationroom.di.component;
 import android.app.Application;
 
 import com.example.newsapplicationroom.di.module.AppModule;
+import com.example.newsapplicationroom.ui.CountrySpinnerAdapter;
 import com.example.newsapplicationroom.ui.DescriptionDisplayActivity;
 import com.example.newsapplicationroom.ui.ProfilePageActivity;
 import com.example.newsapplicationroom.ui.adapter.LatestNewsAdapter;

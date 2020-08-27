@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="country_image_array">
+        <item>@drawable/india_flag</item>
+        <item>@drawable/usa_flag</item>
+        <item>@drawable/argentina_flag</item>
+        <item>@drawable/australia_flag</item>
+        <item>@drawable/brazil_flag</item>
+        <item>@drawable/germany_flag</item>
+        <item>@drawable/france_flag</item>
+        <item>@drawable/italy_flag</item>
+        <item>@drawable/newzealand_flag</item>
+        <item>@drawable/southafrica_flag</item>
+    </integer-array>
+</resources>

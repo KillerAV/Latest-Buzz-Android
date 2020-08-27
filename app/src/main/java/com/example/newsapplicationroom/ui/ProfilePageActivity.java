@@ -2,11 +2,10 @@ package com.example.newsapplicationroom.ui;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -19,6 +18,8 @@ import com.example.newsapplicationroom.utils.Constants;
 import com.example.newsapplicationroom.utils.GlideUtils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -63,10 +64,15 @@ public class ProfilePageActivity extends AppCompatActivity {
         textViewName.setText(displayName);
         textViewEmail.setText(emailId);
 
+        ArrayList<CountryItem> arrayList = initialiseCountryList();
+        CountrySpinnerAdapter countrySpinnerAdapter = new CountrySpinnerAdapter(this, arrayList);
+        spinner.setAdapter(countrySpinnerAdapter);
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
+                CountryItem countryItem = (CountryItem) parent.getItemAtPosition(position);
+                String item = countryItem.getCountryName();
                 country = Constants.COUNTRY_CODE.get(item);
             }
 
@@ -76,14 +82,20 @@ public class ProfilePageActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<CharSequence> adapter =
-                ArrayAdapter.createFromResource(this, R.array.country_array, android.R.layout.simple_spinner_item);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
         int position = findCurrentItemLocation();
         spinner.setSelection(position);
+    }
+
+    private ArrayList<CountryItem> initialiseCountryList() {
+        ArrayList<CountryItem> arrayList = new ArrayList<>();
+        TypedArray country_image_array = getResources().obtainTypedArray(R.array.country_image_array);
+        String[] country_array = getResources().getStringArray(R.array.country_array);
+
+        for(int i = 0; i < country_array.length; i++) {
+            CountryItem countryItem = new CountryItem(country_array[i], country_image_array.getResourceId(i,0));
+            arrayList.add(countryItem);
+        }
+        return arrayList;
     }
 
     private int findCurrentItemLocation() {
