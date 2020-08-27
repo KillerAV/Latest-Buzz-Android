@@ -9,7 +9,6 @@ public class Constants {
     public static final String TO_LABEL = "to";
     public static final String PAGE_LABEL = "page";
     public static final String PAGE_SIZE_LABEL = "pageSize";
-
     public static final String BASE_ADDRESS_TOP_HEADLINES = "https://newsapi.org/v2/";
     public static final String API_KEY = "40043e91a86a44abaa2b31a558b4ae8c";
 

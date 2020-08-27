@@ -13,10 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.newsapplicationroom.R;
+import com.example.newsapplicationroom.ui.NewsApplication;
 import com.example.newsapplicationroom.ui.bulletnews.LatestNewsDescriptionDisplayActivity;
 import com.example.newsapplicationroom.utils.Constants;
 import com.example.newsapplicationroom.utils.GlideUtils;
-import com.example.newsapplicationroom.R;
 import com.newsapplicationroom.entity.LatestNewsEntity;
 
 import java.util.List;
@@ -32,9 +33,12 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.La
     private Context context;
 
     @Inject
+    GlideUtils glideUtils;
+
     public LatestNewsAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        NewsApplication.getAppComponent().inject(this);
     }
 
     @NonNull
@@ -91,7 +95,7 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.La
 
             textView.setText(title);
 
-            GlideUtils.insertImage(context, imageUrl, progressBar, imageView, R.drawable.no_image_found);
+            glideUtils.insertImage(imageUrl, progressBar, imageView, R.drawable.no_image_found);
 
             cardView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, LatestNewsDescriptionDisplayActivity.class);

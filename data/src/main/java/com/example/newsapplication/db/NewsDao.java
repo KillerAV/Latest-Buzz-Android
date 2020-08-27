@@ -27,7 +27,7 @@ public interface NewsDao {
     @Delete
     void deleteNews(NewsEntity newsEntity);
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateNews(NewsEntity newsEntity);
 
     @Query(Constants.DELETE_ALL_NEWS)

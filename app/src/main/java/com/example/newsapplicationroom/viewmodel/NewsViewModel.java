@@ -12,12 +12,15 @@ import com.newsapplicationroom.entity.NewsEntity;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class NewsViewModel extends AndroidViewModel {
-    private NewsRepository newsRepository;
+    @Inject
+    NewsRepository newsRepository;
 
     public NewsViewModel(@NonNull Application application) {
         super(application);
-        newsRepository = NewsApplication.getRoomDatabaseComponent().getNewsRepository();
+        NewsApplication.getAppComponent().inject(this);
     }
 
     public void deleteNews(NewsEntity newsEntity) {

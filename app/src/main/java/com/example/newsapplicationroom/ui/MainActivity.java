@@ -7,23 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.example.newsapplicationroom.R;
-import com.example.newsapplicationroom.di.component.DaggerAdapterComponent;
-import com.example.newsapplicationroom.di.component.DaggerPagerAdapterComponent;
-import com.example.newsapplicationroom.ui.bulletnews.AlarmReceiver;
-import com.example.newsapplicationroom.ui.bulletnews.LatestNewsActivity;
-import com.example.newsapplicationroom.di.component.AdapterComponent;
-import com.example.newsapplicationroom.di.component.PagerAdapterComponent;
-import com.example.newsapplicationroom.viewmodel.NewsViewModel;
-import com.example.newsapplicationroom.viewmodel.UserInformationViewModel;
-import com.example.newsapplicationroom.utils.Constants;
-import com.example.newsapplicationroom.utils.DateUtils;
-import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.newsapplicationroom.entity.UserInfoEntity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,12 +17,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import com.example.newsapplicationroom.R;
+import com.example.newsapplicationroom.di.component.NewsPagerAdapterComponent;
+import com.example.newsapplicationroom.ui.adapter.NewsPagerAdapter;
+import com.example.newsapplicationroom.ui.bulletnews.AlarmReceiver;
+import com.example.newsapplicationroom.ui.bulletnews.LatestNewsActivity;
+import com.example.newsapplicationroom.utils.Constants;
+import com.example.newsapplicationroom.utils.DateUtils;
+import com.example.newsapplicationroom.viewmodel.NewsViewModel;
+import com.example.newsapplicationroom.viewmodel.UserInformationViewModel;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.newsapplicationroom.entity.UserInfoEntity;
 
 import java.util.Calendar;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private static NewsViewModel newsViewModel;
     private static UserInformationViewModel userInformationViewModel;
     private static FirebaseUser firebaseUser;
-    private static AdapterComponent adapterComponent;
     private static UserInfoEntity userInfoEntity;
     public static boolean isAlarmLaunched = false;
     public static String fromDate, toDate;
 
     FirebaseAnalytics firebaseAnalytics;
+
+    @Inject
+    NewsPagerAdapter pagerAdapter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -69,10 +70,9 @@ public class MainActivity extends AppCompatActivity {
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        adapterComponent = DaggerAdapterComponent.builder().setContext(this).build();
-
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
         userInformationViewModel = ViewModelProviders.of(this).get(UserInformationViewModel.class);
+
         new InitialiseInformationAsync().execute();
         initialiseToolbar();
         createAlarm();
@@ -127,10 +127,6 @@ public class MainActivity extends AppCompatActivity {
         return newsViewModel;
     }
 
-    public static AdapterComponent getAdapterComponent() {
-        return adapterComponent;
-    }
-
     private void initialiseToolbar() {
         setSupportActionBar(toolbar);
 
@@ -139,19 +135,20 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.health_news_tag));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        PagerAdapterComponent pagerAdapterComponent = DaggerPagerAdapterComponent.builder()
-                .setFragmentManager(getSupportFragmentManager())
-                .setTabCount(tabLayout.getTabCount())
-                .build();
+        NewsPagerAdapterComponent.Builder builder = NewsApplication.getPagerAdapterComponentBuilder();
+        builder
+                .FragmentManager(getSupportFragmentManager())
+                .TabCount(tabLayout.getTabCount())
+                .build()
+                .inject(this);
 
-        viewPager.setAdapter(pagerAdapterComponent.getNewsPagerAdapter());
+        viewPager.setAdapter(pagerAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                firebaseAnalytics.setUserProperty("Type_of_News", Constants.category[position]);
                 viewPager.setCurrentItem(position);
             }
 
@@ -189,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
             networkInfo = connectivityManager.getActiveNetworkInfo();
         }
         if (networkInfo != null && networkInfo.isConnected()) {
-            firebaseAnalytics.setUserProperty("Country", country);
             newsViewModel.populateDatabase(country);
         } else {
             Toast.makeText(this, R.string.toast_no_internet, Toast.LENGTH_SHORT).show();
@@ -198,11 +194,13 @@ public class MainActivity extends AppCompatActivity {
 
     private class InitialiseInformationAsync extends AsyncTask<Void, Void, Void> {
         private List<UserInfoEntity> userInfoEntities;
+
         @Override
         protected Void doInBackground(Void... voids) {
             userInfoEntities = userInformationViewModel.getUserInformation(firebaseUser.getEmail());
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);

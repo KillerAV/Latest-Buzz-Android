@@ -6,12 +6,13 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.newsapplication.datamodel.NewsApiData;
 import com.example.newsapplication.apiservice.NewsApiHandling;
-import com.example.newsapplication.utils.Constants;
+import com.example.newsapplication.datamodel.NewsApiData;
 import com.example.newsapplication.db.NewsDao;
 import com.example.newsapplication.db.NewsRoomDatabase;
+import com.example.newsapplication.di.component.DaggerNewsApiComponent;
 import com.example.newsapplication.mapper.NewsMapper;
+import com.example.newsapplication.utils.Constants;
 import com.newsapplicationroom.entity.NewsEntity;
 import com.newsapplicationroom.repository.INewsRepository;
 
@@ -27,12 +28,15 @@ import static java.lang.Math.ceil;
 import static java.lang.Math.min;
 
 public class NewsRepository implements INewsRepository {
+    @Inject
+    NewsApiHandling newsApiHandling;
+
     private NewsDao newsDao;
 
-    @Inject
     public NewsRepository(Application application) {
         NewsRoomDatabase newsRoomDatabase = NewsRoomDatabase.getDatabaseInstance(application.getApplicationContext());
         newsDao = newsRoomDatabase.newsDao();
+        DaggerNewsApiComponent.create().inject(this);
     }
 
     @Override
@@ -71,7 +75,7 @@ public class NewsRepository implements INewsRepository {
         };
     }
 
-    private static Callback<NewsApiData> getFirstPageResponseCallback(final String country, final NewsDao newsDao, final String s) {
+    private Callback<NewsApiData> getFirstPageResponseCallback(final String country, final NewsDao newsDao, final String s) {
         return new Callback<NewsApiData>() {
             @Override
             public void onResponse(Call<NewsApiData> call, Response<NewsApiData> response) {
@@ -85,7 +89,7 @@ public class NewsRepository implements INewsRepository {
                     int defaultPageSize = 20;
                     int numberOfPages = (int) ceil(Double.parseDouble(totalRecords) / defaultPageSize);
                     for (int page = 2; page <= min(numberOfPages, Constants.MAX_NUMBER_OF_PAGES_LIMIT); page++) {
-                        NewsApiHandling.getNewsUsingApiCall(country, s,page + "", getNormalPageResponseCallback(newsDao, s));
+                        newsApiHandling.getNewsUsingApiCall(country, s, page + "", getNormalPageResponseCallback(newsDao, s));
                     }
                 }
             }
@@ -102,7 +106,7 @@ public class NewsRepository implements INewsRepository {
         protected Void doInBackground(String... strings) {
             newsDao.deleteAllNews();
             for (final String s : Constants.category) {
-                NewsApiHandling.getNewsUsingApiCall(strings[0], s,"1", getFirstPageResponseCallback(strings[0], newsDao, s));
+                newsApiHandling.getNewsUsingApiCall(strings[0], s, "1", getFirstPageResponseCallback(strings[0], newsDao, s));
             }
             return null;
         }

@@ -6,12 +6,13 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.newsapplication.datamodel.NewsApiData;
 import com.example.newsapplication.apiservice.NewsApiHandling;
-import com.example.newsapplication.utils.Constants;
+import com.example.newsapplication.datamodel.NewsApiData;
 import com.example.newsapplication.db.NewsDao;
 import com.example.newsapplication.db.NewsRoomDatabase;
+import com.example.newsapplication.di.component.DaggerNewsApiComponent;
 import com.example.newsapplication.mapper.LatestNewsMapper;
+import com.example.newsapplication.utils.Constants;
 import com.newsapplicationroom.entity.LatestNewsEntity;
 import com.newsapplicationroom.repository.ILatestNewsRepository;
 
@@ -24,12 +25,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LatestNewsRepository implements ILatestNewsRepository {
+    @Inject
+    NewsApiHandling newsApiHandling;
+
     private NewsDao newsDao;
 
-    @Inject
     public LatestNewsRepository(Application application) {
         NewsRoomDatabase newsRoomDatabase = NewsRoomDatabase.getDatabaseInstance(application.getApplicationContext());
         newsDao = newsRoomDatabase.newsDao();
+        DaggerNewsApiComponent.create().inject(this);
     }
 
     @Override
@@ -60,7 +64,7 @@ public class LatestNewsRepository implements ILatestNewsRepository {
                     Log.e(NewsApiHandling.class.getSimpleName(), t.getMessage());
                 }
             };
-            NewsApiHandling.getLatestNewsUsingApiCall(strings[0], Constants.GENERAL_CATEGORY_NEWS_LABEL, strings[1], strings[2], Constants.LATEST_NEWS_PAGE_SIZE, responseCallback);
+            newsApiHandling.getLatestNewsUsingApiCall(strings[0], Constants.GENERAL_CATEGORY_NEWS_LABEL, strings[1], strings[2], Constants.LATEST_NEWS_PAGE_SIZE, responseCallback);
             return null;
         }
     }

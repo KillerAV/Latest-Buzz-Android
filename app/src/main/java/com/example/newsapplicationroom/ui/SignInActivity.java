@@ -1,14 +1,14 @@
 package com.example.newsapplicationroom.ui;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.newsapplicationroom.R;
 import com.example.newsapplicationroom.utils.Constants;
@@ -74,6 +74,7 @@ public class SignInActivity extends AppCompatActivity {
             userInformationViewModel.insertUserInformation(userInfoEntity);
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);

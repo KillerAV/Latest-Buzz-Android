@@ -1,7 +1,7 @@
 package com.example.newsapplication.mapper;
 
-import com.example.newsapplication.datamodel.NewsApiData;
 import com.example.newsapplication.datamodel.Articles;
+import com.example.newsapplication.datamodel.NewsApiData;
 import com.newsapplicationroom.entity.LatestNewsEntity;
 
 import java.util.ArrayList;

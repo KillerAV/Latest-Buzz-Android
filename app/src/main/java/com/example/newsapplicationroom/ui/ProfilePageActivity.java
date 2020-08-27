@@ -1,11 +1,8 @@
 package com.example.newsapplicationroom.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,11 +11,15 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.newsapplicationroom.R;
 import com.example.newsapplicationroom.utils.Constants;
 import com.example.newsapplicationroom.utils.GlideUtils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,9 @@ public class ProfilePageActivity extends AppCompatActivity {
     @BindView(R.id.country_spinner)
     Spinner spinner;
 
+    @Inject
+    GlideUtils glideUtils;
+
     FirebaseAnalytics firebaseAnalytics;
 
     @Override
@@ -44,9 +48,9 @@ public class ProfilePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
         ButterKnife.bind(this);
+        NewsApplication.getAppComponent().inject(this);
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
         Intent intent = getIntent();
         country = intent.getStringExtra(Constants.EXTRA_COUNTRY_NAME);
         initialCountry = country;
@@ -54,7 +58,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         String emailId = intent.getStringExtra(Constants.EXTRA_EMAIL_ID);
         String photoUrl = intent.getStringExtra(Constants.EXTRA_PROFILE_PICTURE);
 
-        GlideUtils.insertImage(this, photoUrl, progressBar, imageView, R.drawable.ic_profile_dark);
+        glideUtils.insertImage(photoUrl, progressBar, imageView, R.drawable.ic_profile_dark);
         textViewName.setText(displayName);
         textViewEmail.setText(emailId);
 

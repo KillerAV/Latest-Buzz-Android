@@ -12,13 +12,17 @@ import com.newsapplicationroom.entity.LatestNewsEntity;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class LatestNewsViewModel extends AndroidViewModel {
-    private LatestNewsRepository latestNewsRepository;
+    @Inject
+    LatestNewsRepository latestNewsRepository;
 
     public LatestNewsViewModel(@NonNull Application application) {
         super(application);
-        latestNewsRepository = NewsApplication.getRoomDatabaseComponent().getLatestNewsRepository();
+        NewsApplication.getAppComponent().inject(this);
     }
+
     public LiveData<List<LatestNewsEntity>> getLatestNews() {
         return latestNewsRepository.getLatestNews();
     }

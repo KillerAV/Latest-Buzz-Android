@@ -2,27 +2,34 @@ package com.example.newsapplicationroom.ui;
 
 import android.app.Application;
 
-import com.example.newsapplicationroom.di.component.DaggerNewsCategoryComponent;
-import com.example.newsapplicationroom.di.component.DaggerRoomDatabaseComponent;
-import com.example.newsapplicationroom.di.component.NewsCategoryComponent;
-import com.example.newsapplicationroom.di.component.RoomDatabaseComponent;
+import com.example.newsapplicationroom.di.component.AdapterComponent;
+import com.example.newsapplicationroom.di.component.AlarmNotificationComponent;
+import com.example.newsapplicationroom.di.component.AppComponent;
+import com.example.newsapplicationroom.di.component.DaggerAppComponent;
+import com.example.newsapplicationroom.di.component.NewsPagerAdapterComponent;
 
-public class NewsApplication extends Application{
-    private static RoomDatabaseComponent roomDatabaseComponent;
-    private static NewsCategoryComponent newsCategoryComponent;
+public class NewsApplication extends Application {
+    private static AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        roomDatabaseComponent = DaggerRoomDatabaseComponent.builder().setApplication(this).build();
-        newsCategoryComponent = DaggerNewsCategoryComponent.create();
+        appComponent = DaggerAppComponent.builder().application(this).build();
     }
 
-    public static RoomDatabaseComponent getRoomDatabaseComponent() {
-        return roomDatabaseComponent;
+    public static AppComponent getAppComponent() {
+        return appComponent;
     }
 
-    public static NewsCategoryComponent getNewsCategoryComponent() {
-        return newsCategoryComponent;
+    public static AdapterComponent.Builder getAdapterComponentBuilder() {
+        return appComponent.AdapterComponentBuilder();
+    }
+
+    public static NewsPagerAdapterComponent.Builder getPagerAdapterComponentBuilder() {
+        return appComponent.NewsPagerAdapterComponentBuilder();
+    }
+
+    public static AlarmNotificationComponent.Builder getAlarmNotificationComponentBuilder() {
+        return appComponent.AlarmNotificationComponentBuilder();
     }
 }

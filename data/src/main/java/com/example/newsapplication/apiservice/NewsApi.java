@@ -1,7 +1,7 @@
 package com.example.newsapplication.apiservice;
 
-import com.example.newsapplication.utils.Constants;
 import com.example.newsapplication.datamodel.NewsApiData;
+import com.example.newsapplication.utils.Constants;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

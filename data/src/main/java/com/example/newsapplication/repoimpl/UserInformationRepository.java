@@ -10,13 +10,10 @@ import com.newsapplicationroom.repository.IUserInformationRepository;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class UserInformationRepository implements IUserInformationRepository {
 
     private NewsDao newsDao;
 
-    @Inject
     public UserInformationRepository(Application application) {
         NewsRoomDatabase newsRoomDatabase = NewsRoomDatabase.getDatabaseInstance(application.getApplicationContext());
         newsDao = newsRoomDatabase.newsDao();

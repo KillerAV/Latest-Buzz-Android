@@ -11,14 +11,17 @@ import com.newsapplicationroom.entity.UserInfoEntity;
 
 import java.util.List;
 
-public class UserInformationViewModel extends AndroidViewModel {
+import javax.inject.Inject;
 
-    private UserInformationRepository userNewsRepository;
+public class UserInformationViewModel extends AndroidViewModel {
+    @Inject
+    UserInformationRepository userNewsRepository;
 
     public UserInformationViewModel(@NonNull Application application) {
         super(application);
-        userNewsRepository = NewsApplication.getRoomDatabaseComponent().getUserInformationRepository();
+        NewsApplication.getAppComponent().inject(this);
     }
+
     public List<UserInfoEntity> getUserInformation(String email) {
         return userNewsRepository.getUserInformation(email);
     }

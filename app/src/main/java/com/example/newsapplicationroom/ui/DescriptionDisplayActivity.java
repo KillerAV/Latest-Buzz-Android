@@ -1,9 +1,5 @@
 package com.example.newsapplicationroom.ui;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -13,11 +9,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.newsapplicationroom.R;
-import com.example.newsapplicationroom.viewmodel.NewsViewModel;
 import com.example.newsapplicationroom.utils.Constants;
 import com.example.newsapplicationroom.utils.GlideUtils;
+import com.example.newsapplicationroom.viewmodel.NewsViewModel;
 import com.newsapplicationroom.entity.NewsEntity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +36,9 @@ public class DescriptionDisplayActivity extends AppCompatActivity {
     @BindView(R.id.displayGlideProgressBar)
     ProgressBar displayProgressBar;
 
+    @Inject
+    GlideUtils glideUtils;
+
     private int newsId;
     private String newsImageUrl, title, description, category, newsUrl;
 
@@ -42,6 +47,7 @@ public class DescriptionDisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description_display);
         ButterKnife.bind(this);
+        NewsApplication.getAppComponent().inject(this);
 
         Intent intent = getIntent();
         title = intent.getStringExtra(Constants.EXTRA_TITLE);
@@ -60,7 +66,7 @@ public class DescriptionDisplayActivity extends AppCompatActivity {
         String createUrl = "<a href='" + newsUrl + "'> Click to know more... </a>";
         urlView.setText(Html.fromHtml(createUrl));
 
-        GlideUtils.insertImage(this, newsImageUrl, displayProgressBar, displayImage, R.drawable.no_image_found);
+        glideUtils.insertImage(newsImageUrl, displayProgressBar, displayImage, R.drawable.no_image_found);
     }
 
     @Override

@@ -14,8 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.newsapplicationroom.ui.DescriptionDisplayActivity;
 import com.example.newsapplicationroom.R;
+import com.example.newsapplicationroom.ui.DescriptionDisplayActivity;
+import com.example.newsapplicationroom.ui.NewsApplication;
 import com.example.newsapplicationroom.utils.Constants;
 import com.example.newsapplicationroom.utils.GlideUtils;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -35,10 +36,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     FirebaseAnalytics firebaseAnalytics;
 
     @Inject
+    GlideUtils glideUtils;
+
     public NewsAdapter(Context context) {
         this.context = context;
         firebaseAnalytics = FirebaseAnalytics.getInstance(context);
         inflater = LayoutInflater.from(context);
+        NewsApplication.getAppComponent().inject(this);
     }
 
     @NonNull
@@ -100,8 +104,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
             url = newsEntity.getUrl();
 
             textView.setText(title);
-
-            GlideUtils.insertImage(context, imageUrl, progressBar, imageView, R.drawable.no_image_found);
+            glideUtils.insertImage(imageUrl, progressBar, imageView, R.drawable.no_image_found);
 
             cardView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, DescriptionDisplayActivity.class);

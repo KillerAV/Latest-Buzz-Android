@@ -10,10 +10,9 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.newsapplicationroom.utils.Constants;
 import com.example.newsapplicationroom.R;
+import com.example.newsapplicationroom.utils.Constants;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -24,7 +23,6 @@ public class AlarmNotificationLauncher {
     private Context context;
     private String fromDate, toDate;
 
-    @Inject
     public AlarmNotificationLauncher(Context context, @Named("fromDate") String fromDate, @Named("toDate") String toDate) {
         this.context = context;
         this.fromDate = fromDate;
