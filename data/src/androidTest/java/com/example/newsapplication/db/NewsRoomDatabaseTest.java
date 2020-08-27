@@ -61,14 +61,16 @@ public class NewsRoomDatabaseTest {
         });
     }
 
-    //ISSUE
     @Test
     public void writeAndUpdateNews() {
         NewsEntity newsEntity = TestUtils.getNewsEntity();
-        userDao.insertNews(newsEntity);
-
         NewsEntity updatedEntity = TestUtils.getUpdatedNewsEntity();
-        updatedEntity.setId(newsEntity.getId());
+        userDao.insertNews(newsEntity);
+        userDao.getNews(TestConstants.PLACEHOLDER_CATEGORY).observeForever(newsEntityList -> {
+            if(newsEntityList.size() == 1) {
+                updatedEntity.setId(newsEntityList.get(0).getId());
+            }
+        });
         userDao.updateNews(updatedEntity);
 
         userDao.getNews(TestConstants.PLACEHOLDER_CATEGORY).observeForever(oldNewsEntityList -> {
@@ -85,11 +87,17 @@ public class NewsRoomDatabaseTest {
         });
     }
 
-    //ISSUE
     @Test
     public void writeAndDeleteNews() {
         NewsEntity newsEntity = TestUtils.getNewsEntity();
         userDao.insertNews(newsEntity);
+
+        userDao.getNews(TestConstants.PLACEHOLDER_CATEGORY).observeForever(newsEntityList -> {
+            if(newsEntityList.size() == 1) {
+                newsEntity.setId(newsEntityList.get(0).getId());
+            }
+        });
+
         userDao.deleteNews(newsEntity);
         userDao.getNews(TestConstants.PLACEHOLDER_CATEGORY).observeForever(newsEntityList -> {
             assertThat(0, is(equalTo(newsEntityList.size())));
