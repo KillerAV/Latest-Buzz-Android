@@ -2,8 +2,6 @@ package com.example.newsapplicationroom.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -61,10 +59,6 @@ public class DescriptionDisplayActivity extends AppCompatActivity {
 
         titleView.setText(titleText);
         descriptionView.setText(description);
-        urlView.setClickable(true);
-        urlView.setMovementMethod(LinkMovementMethod.getInstance());
-        String createUrl = "<a href='" + newsUrl + "'> Click to know more... </a>";
-        urlView.setText(Html.fromHtml(createUrl));
 
         glideUtils.insertImage(newsImageUrl, displayProgressBar, displayImage, R.drawable.no_image_found);
     }
@@ -97,5 +91,11 @@ public class DescriptionDisplayActivity extends AppCompatActivity {
         intent.putExtra(Constants.EXTRA_CATEGORY, category);
 
         startActivityForResult(intent, Constants.UPDATE_NEWS_REQUEST_CODE);
+    }
+
+    public void onUrlButtonClick(View view) {
+        Intent intent = new Intent(this, MoreInformationActivity.class);
+        intent.putExtra(Constants.EXTRA_URL, newsUrl);
+        startActivity(intent);
     }
 }

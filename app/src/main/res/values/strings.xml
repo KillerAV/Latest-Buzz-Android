@@ -54,6 +54,9 @@
     <string name="alarm_notification_content">Top 30 Bullet News is Live</string>
     <string name="splash_screen_heading">LATEST BUZZ</string>
     <string name="splash_screen_sub_heading">Stay Updated</string>
+    <string name="click_to_know_more">Click to know more</string>
+    <string name="loading">Loading</string>
+    <string name="please_wait">Please Wait</string>
 
     <string-array name="country_array">
         <item>India</item>

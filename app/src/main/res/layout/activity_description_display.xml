@@ -43,14 +43,18 @@
 
     </ScrollView>
 
-    <TextView
+    <Button
         android:id="@+id/displayUrl"
+        style="@style/text_view_body_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder_text"
-        style="@style/text_view_body_style"
+        android:layout_below="@+id/displayScrollView"
+        android:background="@android:color/white"
         android:layout_marginHorizontal="@dimen/standard_margin_dimension"
-        android:layout_below="@+id/displayScrollView" />
+        android:gravity="center"
+        android:onClick="onUrlButtonClick"
+        android:text="@string/click_to_know_more"
+        android:textColor="#03A9F4" />
 
     <Button
         android:id="@+id/update_button"

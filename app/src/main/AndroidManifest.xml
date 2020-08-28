@@ -50,6 +50,9 @@
         <activity
             android:name=".ui.DescriptionDisplayActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.MoreInformationActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".ui.bulletnews.LatestNewsJobScheduler"
