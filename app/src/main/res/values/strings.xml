@@ -53,7 +53,7 @@
     <string name="alarm_notification_title">Bullet News Live</string>
     <string name="alarm_notification_content">Top 30 Bullet News is Live</string>
     <string name="splash_screen_heading">LATEST BUZZ</string>
-    <string name="splash_screen_sub_heading">Let\'s Stay Updated</string>
+    <string name="splash_screen_sub_heading">Stay Updated</string>
 
     <string-array name="country_array">
         <item>India</item>
