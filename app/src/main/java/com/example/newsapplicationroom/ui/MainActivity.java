@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -31,10 +32,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.newsapplicationroom.entity.UserInfoEntity;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -51,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
     public static String fromDate, toDate;
 
     FirebaseAnalytics firebaseAnalytics;
+    FirebaseFirestore firebaseFirestore;
+
+    DocumentReference documentReference;
+    String userId;
 
     @Inject
     NewsPagerAdapter pagerAdapter;
@@ -69,13 +78,15 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        userId = firebaseUser.getUid();
+        documentReference = firebaseFirestore.collection("users").document(userId);
 
         newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
         userInformationViewModel = ViewModelProviders.of(this).get(UserInformationViewModel.class);
 
         new InitialiseInformationAsync().execute();
-        initialiseToolbar();
         createAlarm();
     }
 
@@ -174,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
                 Constants.ALARM_PENDING_INTENT_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-
         Calendar day = DateUtils.getCalenderDay(0, 0, 0, 20);
         long triggerTime = day.getTimeInMillis();
         while (triggerTime < System.currentTimeMillis()) {
@@ -191,10 +201,24 @@ public class MainActivity extends AppCompatActivity {
             networkInfo = connectivityManager.getActiveNetworkInfo();
         }
         if (networkInfo != null && networkInfo.isConnected()) {
+            userInfoEntity.setCountry(country);
+            updateUserInformationFirebase();
             newsViewModel.populateDatabase(country);
         } else {
             Toast.makeText(this, R.string.toast_no_internet, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void updateUserInformationFirebase() {
+        Map<String, Object> userInformation = new HashMap<>();
+        userInformation.put("Name", userInfoEntity.getName());
+        userInformation.put("EmailId", userInfoEntity.getEmailId());
+        userInformation.put("Country", userInfoEntity.getCountry());
+        Log.d(MainActivity.class.getSimpleName(), "updateUserInformationFirebase: " + userInfoEntity.getCountry());
+        documentReference
+                .set(userInformation)
+                .addOnSuccessListener(aVoid -> Log.d(MainActivity.class.getSimpleName(), "user added successfully to firebase"))
+                .addOnFailureListener(e -> Log.d(MainActivity.class.getSimpleName(), "user adding to firebase failed"));
     }
 
     private class InitialiseInformationAsync extends AsyncTask<Void, Void, Void> {
@@ -212,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
             userInfoEntity = userInfoEntities.get(0);
             String country = userInfoEntity.getCountry();
             fetchNews(country);
+            initialiseToolbar();
         }
     }
 }

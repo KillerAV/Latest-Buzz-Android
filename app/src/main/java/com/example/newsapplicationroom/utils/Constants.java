@@ -54,4 +54,5 @@ public class Constants {
     public static final long MILLISECONDS_IN_A_DAY = 86400000;
     public static final long ALARM_REPEAT_INTERVAL = AlarmManager.INTERVAL_DAY;
     public static final String PLACEHOLDER_STRING = "Placeholder String";
+    public static final String DEFAULT_COUNTRY = "in";
 }

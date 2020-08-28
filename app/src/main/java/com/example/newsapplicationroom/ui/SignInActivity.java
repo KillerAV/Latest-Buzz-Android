@@ -18,6 +18,8 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.newsapplicationroom.entity.UserInfoEntity;
 
 import java.util.Arrays;
@@ -26,6 +28,7 @@ import java.util.List;
 public class SignInActivity extends AppCompatActivity {
     private static UserInformationViewModel userInformationViewModel;
     FirebaseAnalytics firebaseAnalytics;
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class SignInActivity extends AppCompatActivity {
 
         userInformationViewModel = ViewModelProviders.of(this).get(UserInformationViewModel.class);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -71,6 +75,16 @@ public class SignInActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             UserInfoEntity userInfoEntity = new UserInfoEntity(user.getEmail(), user.getDisplayName());
+            String userId = user.getUid();
+            DocumentReference documentReference = firebaseFirestore.collection("users").document(userId);
+            documentReference.addSnapshotListener((value, error) -> {
+                String country = value.getString("Country");
+                if (country != null) {
+                    userInfoEntity.setCountry(country);
+                } else {
+                    userInfoEntity.setCountry(Constants.DEFAULT_COUNTRY);
+                }
+            });
             userInformationViewModel.insertUserInformation(userInfoEntity);
             return null;
         }
