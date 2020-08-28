@@ -31,7 +31,7 @@
     <string name="toast_no_internet">No Internet Connection</string>
     <string name="country_picker">Country Picker</string>
     <string name="which_country_s_news_you_want_to_see">Which country\'s News you want to see?</string>
-    <string name="entertainment_news_tag">Entertainment</string>
+    <string name="entertainment_news_tag">Entmt</string>
     <string name="sports_news_tag">Sports</string>
     <string name="health_news_tag">Health</string>
     <string name="update_news_header">Update News</string>

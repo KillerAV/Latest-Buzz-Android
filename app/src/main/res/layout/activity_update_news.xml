@@ -7,19 +7,10 @@
     tools:context=".ui.UpdateNewsActivity">
 
     <TextView
-        android:id="@+id/add_news_heading"
-        android:text="@string/update_news_header"
-        android:textSize="30sp"
-        style="@style/text_view_style"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-    <TextView
         android:id="@+id/add_news_title_heading"
         android:text="@string/enter_title"
-        android:textSize="20sp"
         style="@style/text_view_body_style"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_below="@+id/add_news_heading"
         android:gravity="left"
         android:layout_marginTop="@dimen/standard_margin_dimension"
         android:layout_marginHorizontal="@dimen/standard_margin_dimension"/>
@@ -43,7 +34,6 @@
         style="@style/text_view_body_style"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:gravity="left"
-        android:textSize="20sp"
         android:layout_marginTop="@dimen/standard_margin_dimension"
         android:layout_marginHorizontal="@dimen/standard_margin_dimension"
         android:layout_below="@+id/newsTitle"/>
@@ -63,24 +53,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="@string/entertainment"
-            android:textSize="16sp" />
+            android:text="@string/entertainment" />
 
         <RadioButton
             android:id="@+id/sports_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/sports"
-            android:textSize="16sp" />
+            android:text="@string/sports" />
 
         <RadioButton
             android:id="@+id/health_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/health"
-            android:textSize="16sp" />
+            android:text="@string/health" />
 
     </RadioGroup>
 
@@ -92,7 +79,6 @@
         android:gravity="left"
         android:layout_marginTop="@dimen/standard_margin_dimension"
         android:layout_marginHorizontal="@dimen/standard_margin_dimension"
-        android:textSize="20sp"
         android:layout_below="@+id/newsCategory" />
 
     <EditText
@@ -101,7 +87,7 @@
         android:layout_marginTop="@dimen/standard_margin_dimension"
         android:layout_marginHorizontal="@dimen/standard_margin_dimension"
         android:layout_below="@+id/add_news_description_heading"
-        android:height="175dp"
+        android:height="150dp"
         style="@style/text_view_body_style"
         android:hint="@string/enter_news_description_here"
         android:inputType="textMultiLine"

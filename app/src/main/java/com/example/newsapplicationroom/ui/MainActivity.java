@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
 
-        Calendar day = DateUtils.getCalenderDay(0, 0, 0, 8);
+        Calendar day = DateUtils.getCalenderDay(0, 0, 0, 20);
         long triggerTime = day.getTimeInMillis();
         while (triggerTime < System.currentTimeMillis()) {
             triggerTime += Constants.ALARM_REPEAT_INTERVAL;
