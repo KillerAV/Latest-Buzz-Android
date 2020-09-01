@@ -3,9 +3,9 @@ package com.example.newsapplicationroom.di.component;
 import android.app.Application;
 
 import com.example.newsapplicationroom.di.module.AppModule;
-import com.example.newsapplicationroom.ui.CountrySpinnerAdapter;
 import com.example.newsapplicationroom.ui.DescriptionDisplayActivity;
 import com.example.newsapplicationroom.ui.ProfilePageActivity;
+import com.example.newsapplicationroom.ui.SignInActivity;
 import com.example.newsapplicationroom.ui.adapter.LatestNewsAdapter;
 import com.example.newsapplicationroom.ui.adapter.NewsAdapter;
 import com.example.newsapplicationroom.ui.adapter.NewsPagerAdapter;
@@ -46,6 +46,8 @@ public interface AppComponent {
     NewsPagerAdapterComponent.Builder NewsPagerAdapterComponentBuilder();
 
     AlarmNotificationComponent.Builder AlarmNotificationComponentBuilder();
+
+    FirebaseComponent.Builder FirebaseComponentBuilder();
 
     @Component.Builder
     interface Builder {

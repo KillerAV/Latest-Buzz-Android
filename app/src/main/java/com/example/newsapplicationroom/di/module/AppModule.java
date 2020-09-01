@@ -11,6 +11,8 @@ import com.example.newsapplicationroom.ui.newsfragments.EntertainmentNewsFragmen
 import com.example.newsapplicationroom.ui.newsfragments.HealthNewsFragment;
 import com.example.newsapplicationroom.ui.newsfragments.SportsNewsFragment;
 import com.example.newsapplicationroom.utils.GlideUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import javax.inject.Singleton;
 
@@ -66,5 +68,17 @@ public class AppModule {
     @Provides
     static UserInformationRepository providesUserInformationRepository(Application application) {
         return new UserInformationRepository(application);
+    }
+
+    @Singleton
+    @Provides
+    static FirebaseFirestore providesFirebaseFirestore() {
+        return FirebaseFirestore.getInstance();
+    }
+
+    @Singleton
+    @Provides
+    static FirebaseAuth providesFirebaseAuth() {
+        return FirebaseAuth.getInstance();
     }
 }

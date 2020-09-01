@@ -25,18 +25,28 @@ import com.newsapplicationroom.entity.UserInfoEntity;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class SignInActivity extends AppCompatActivity {
     private static UserInformationViewModel userInformationViewModel;
-    FirebaseAnalytics firebaseAnalytics;
+
+    @Inject
     FirebaseFirestore firebaseFirestore;
+    @Inject
+    FirebaseAnalytics firebaseAnalytics;
+    @Inject
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NewsApplication
+                .getFirebaseComponentBuilder()
+                .context(this)
+                .build()
+                .inject(this);
 
         userInformationViewModel = ViewModelProviders.of(this).get(UserInformationViewModel.class);
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        firebaseFirestore = FirebaseFirestore.getInstance();
 
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -73,19 +83,22 @@ public class SignInActivity extends AppCompatActivity {
     private class AddInformationToDatabaseAsync extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUser user = firebaseAuth.getCurrentUser();
             UserInfoEntity userInfoEntity = new UserInfoEntity(user.getEmail(), user.getDisplayName());
             String userId = user.getUid();
             DocumentReference documentReference = firebaseFirestore.collection("users").document(userId);
+
             documentReference.addSnapshotListener((value, error) -> {
-                String country = value.getString("Country");
-                if (country != null) {
-                    userInfoEntity.setCountry(country);
-                } else {
-                    userInfoEntity.setCountry(Constants.DEFAULT_COUNTRY);
+                if(value != null) {
+                    String country = value.getString("Country");
+                    if (country != null) {
+                        userInfoEntity.setCountry(country);
+                    } else {
+                        userInfoEntity.setCountry(Constants.DEFAULT_COUNTRY);
+                    }
+                    userInformationViewModel.insertUserInformation(userInfoEntity);
                 }
             });
-            userInformationViewModel.insertUserInformation(userInfoEntity);
             return null;
         }
 

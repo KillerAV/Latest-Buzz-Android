@@ -12,7 +12,7 @@ import dagger.BindsInstance;
 import dagger.Subcomponent;
 
 @ActivityScope
-@Subcomponent(modules = {NewsPagerAdapterModule.class})
+@Subcomponent(modules = NewsPagerAdapterModule.class)
 public interface NewsPagerAdapterComponent {
 
     void inject(MainActivity mainActivity);

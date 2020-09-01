@@ -6,6 +6,7 @@ import com.example.newsapplicationroom.di.component.AdapterComponent;
 import com.example.newsapplicationroom.di.component.AlarmNotificationComponent;
 import com.example.newsapplicationroom.di.component.AppComponent;
 import com.example.newsapplicationroom.di.component.DaggerAppComponent;
+import com.example.newsapplicationroom.di.component.FirebaseComponent;
 import com.example.newsapplicationroom.di.component.NewsPagerAdapterComponent;
 
 public class NewsApplication extends Application {
@@ -31,5 +32,9 @@ public class NewsApplication extends Application {
 
     public static AlarmNotificationComponent.Builder getAlarmNotificationComponentBuilder() {
         return appComponent.AlarmNotificationComponentBuilder();
+    }
+
+    public static FirebaseComponent.Builder getFirebaseComponentBuilder() {
+        return appComponent.FirebaseComponentBuilder();
     }
 }

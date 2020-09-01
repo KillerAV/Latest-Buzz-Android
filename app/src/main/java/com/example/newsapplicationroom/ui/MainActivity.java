@@ -56,13 +56,16 @@ public class MainActivity extends AppCompatActivity {
     public static String fromDate, toDate;
 
     FirebaseAnalytics firebaseAnalytics;
-    FirebaseFirestore firebaseFirestore;
 
     DocumentReference documentReference;
     String userId;
 
     @Inject
     NewsPagerAdapter pagerAdapter;
+    @Inject
+    FirebaseFirestore firebaseFirestore;
+    @Inject
+    FirebaseAuth firebaseAuth;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -77,8 +80,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.entertainment_news_tag));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.sports_news_tag));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.health_news_tag));
+        NewsPagerAdapterComponent.Builder builder = NewsApplication.getPagerAdapterComponentBuilder();
+        builder
+                .FragmentManager(getSupportFragmentManager())
+                .TabCount(tabLayout.getTabCount())
+                .build()
+                .inject(this);
+
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         userId = firebaseUser.getUid();
         documentReference = firebaseFirestore.collection("users").document(userId);
@@ -146,18 +158,7 @@ public class MainActivity extends AppCompatActivity {
     private void initialiseToolbar() {
         setSupportActionBar(toolbar);
 
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.entertainment_news_tag));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.sports_news_tag));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.health_news_tag));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        NewsPagerAdapterComponent.Builder builder = NewsApplication.getPagerAdapterComponentBuilder();
-        builder
-                .FragmentManager(getSupportFragmentManager())
-                .TabCount(tabLayout.getTabCount())
-                .build()
-                .inject(this);
-
         viewPager.setAdapter(pagerAdapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -214,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
         userInformation.put("Name", userInfoEntity.getName());
         userInformation.put("EmailId", userInfoEntity.getEmailId());
         userInformation.put("Country", userInfoEntity.getCountry());
-        Log.d(MainActivity.class.getSimpleName(), "updateUserInformationFirebase: " + userInfoEntity.getCountry());
         documentReference
                 .set(userInformation)
                 .addOnSuccessListener(aVoid -> Log.d(MainActivity.class.getSimpleName(), "user added successfully to firebase"))
