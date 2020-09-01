@@ -50,8 +50,6 @@ public interface AppComponent {
 
     ProfilePageActivityComponent.Builder ProfilePageActivityComponentBuilder();
 
-    NewsCategoryFragmentComponent.Builder NewsCategoryFragmentComponentBuilder();
-
     NewsPagerAdapterComponent NewsPagerAdapterComponent();
 
     @Component.Builder

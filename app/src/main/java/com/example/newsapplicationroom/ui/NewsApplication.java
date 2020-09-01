@@ -15,7 +15,6 @@ public class NewsApplication extends Application {
     private static AppComponent appComponent;
     private static MainActivityComponent.Builder mainActivityComponentBuilder;
     private static ProfilePageActivityComponent.Builder profilePageActivityComponentBuilder;
-    private static NewsCategoryFragmentComponent.Builder newsCategoryFragmentComponentBuilder;
     private static LatestNewsActivityComponent.Builder latestNewsAdapterComponentBuilder;
     private static LatestNewsJobSchedulerComponent.Builder latestNewsJobSchedulerComponentBuilder;
     private static NewsPagerAdapterComponent newsPagerAdapterComponent;
@@ -30,10 +29,6 @@ public class NewsApplication extends Application {
 
     public static AppComponent getAppComponent() {
         return appComponent;
-    }
-
-    public static NewsCategoryFragmentComponent.Builder getNewsCategoryFragmentComponentBuilder() {
-        return newsCategoryFragmentComponentBuilder;
     }
 
     public static LatestNewsActivityComponent.Builder getLatestNewsAdapterComponentBuilder() {
@@ -54,7 +49,6 @@ public class NewsApplication extends Application {
         appComponent = DaggerAppComponent.builder().application(this).build();
         mainActivityComponentBuilder = appComponent.MainActivityComponentBuilder();
         profilePageActivityComponentBuilder = appComponent.ProfilePageActivityComponentBuilder();
-        newsCategoryFragmentComponentBuilder = appComponent.NewsCategoryFragmentComponentBuilder();
         latestNewsAdapterComponentBuilder = appComponent.LatestNewsActivityComponentBuilder();
         latestNewsJobSchedulerComponentBuilder = appComponent.LatestNewsJobSchedulerComponentBuilder();
         newsPagerAdapterComponent = appComponent.NewsPagerAdapterComponent();

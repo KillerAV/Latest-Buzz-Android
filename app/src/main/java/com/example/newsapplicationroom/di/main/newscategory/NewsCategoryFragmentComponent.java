@@ -11,7 +11,7 @@ import com.example.newsapplicationroom.viewmodel.NewsViewModel;
 import dagger.BindsInstance;
 import dagger.Subcomponent;
 
-@MainActivityScope
+@MainActivityFragmentScope
 @Subcomponent(modules = NewsAdapterModule.class)
 public interface NewsCategoryFragmentComponent {
 
@@ -25,9 +25,6 @@ public interface NewsCategoryFragmentComponent {
     interface Builder {
         @BindsInstance
         Builder newsViewModel(NewsViewModel newsViewModel);
-
-        @BindsInstance
-        Builder context(Context context);
 
         NewsCategoryFragmentComponent build();
     }

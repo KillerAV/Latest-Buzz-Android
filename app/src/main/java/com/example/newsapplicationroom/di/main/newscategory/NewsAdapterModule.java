@@ -18,14 +18,14 @@ import dagger.Provides;
 
 @Module
 public class NewsAdapterModule {
-    @MainActivityScope
+    @MainActivityFragmentScope
     @Provides
     static NewsAdapter providesNewsAdapter(Context context) {
         return new NewsAdapter(context);
     }
 
     @Provides
-    @MainActivityScope
+    @MainActivityFragmentScope
     static ItemTouchHelper.SimpleCallback providesItemTouchHelperSimpleCallback(Context context, NewsAdapter adapter, NewsViewModel viewModel) {
         return new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -49,7 +49,7 @@ public class NewsAdapterModule {
     }
 
     @Provides
-    @MainActivityScope
+    @MainActivityFragmentScope
     static ItemTouchHelper providesItemTouchHelper(ItemTouchHelper.SimpleCallback simpleCallback) {
         return new ItemTouchHelper(simpleCallback);
     }

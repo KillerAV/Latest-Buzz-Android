@@ -21,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapplicationroom.R;
 import com.example.newsapplicationroom.di.main.MainActivityComponent;
+import com.example.newsapplicationroom.di.main.newscategory.NewsCategoryFragmentComponent;
 import com.example.newsapplicationroom.ui.NewsApplication;
 import com.example.newsapplicationroom.ui.main.actionbar.bulletnews.LatestNewsActivity;
 import com.example.newsapplicationroom.ui.main.actionbar.bulletnews.alarm.AlarmReceiver;
@@ -57,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isAlarmLaunched = false;
     public static String fromDate, toDate;
 
-    FirebaseAnalytics firebaseAnalytics;
-
+    private static NewsCategoryFragmentComponent.Builder newsCategoryFragmentComponentBuilder;
     DocumentReference documentReference;
     String userId;
 
@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     @Inject
     FirebaseAuth firebaseAuth;
+    @Inject
+    FirebaseAnalytics firebaseAnalytics;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -87,12 +89,15 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.health_news_tag));
 
         MainActivityComponent.Builder builder = NewsApplication.getMainActivityComponentBuilder();
-        builder
-                .context(this)
-                .FragmentManager(getSupportFragmentManager())
-                .TabCount(tabLayout.getTabCount())
-                .build()
-                .inject(this);
+        MainActivityComponent mainActivityComponent =
+                builder
+                    .context(this)
+                    .FragmentManager(getSupportFragmentManager())
+                    .TabCount(tabLayout.getTabCount())
+                    .build();
+
+        mainActivityComponent.inject(this);
+        newsCategoryFragmentComponentBuilder = mainActivityComponent.NewsCategoryFragmentComponentBuilder();
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -157,6 +162,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static NewsViewModel getViewModel() {
         return newsViewModel;
+    }
+
+    public static NewsCategoryFragmentComponent.Builder getNewsCategoryFragmentComponent() {
+        return newsCategoryFragmentComponentBuilder;
     }
 
     private void initialiseToolbar() {

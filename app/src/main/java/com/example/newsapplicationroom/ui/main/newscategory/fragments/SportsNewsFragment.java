@@ -43,9 +43,8 @@ public class SportsNewsFragment extends Fragment {
         final NewsViewModel newsViewModel = MainActivity.getViewModel();
         ButterKnife.bind(this, view);
 
-        NewsCategoryFragmentComponent.Builder builder = NewsApplication.getNewsCategoryFragmentComponentBuilder();
+        NewsCategoryFragmentComponent.Builder builder = MainActivity.getNewsCategoryFragmentComponent();
         builder
-                .context(getActivity())
                 .newsViewModel(newsViewModel)
                 .build()
                 .inject(this);
