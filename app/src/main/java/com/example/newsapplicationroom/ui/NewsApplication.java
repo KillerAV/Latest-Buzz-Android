@@ -2,39 +2,61 @@ package com.example.newsapplicationroom.ui;
 
 import android.app.Application;
 
-import com.example.newsapplicationroom.di.component.AdapterComponent;
-import com.example.newsapplicationroom.di.component.LatestNewsJobSchedulerComponent;
-import com.example.newsapplicationroom.di.component.AppComponent;
-import com.example.newsapplicationroom.di.component.DaggerAppComponent;
-import com.example.newsapplicationroom.di.component.MainActivityComponent;
-import com.example.newsapplicationroom.di.component.SignInActivityComponent;
+import com.example.newsapplicationroom.di.app.AppComponent;
+import com.example.newsapplicationroom.di.app.DaggerAppComponent;
+import com.example.newsapplicationroom.di.main.MainActivityComponent;
+import com.example.newsapplicationroom.di.main.actionbar.bulletnews.adapter.LatestNewsActivityComponent;
+import com.example.newsapplicationroom.di.main.actionbar.bulletnews.alarm.LatestNewsJobSchedulerComponent;
+import com.example.newsapplicationroom.di.main.actionbar.profile.ProfilePageActivityComponent;
+import com.example.newsapplicationroom.di.main.newscategory.NewsCategoryFragmentComponent;
+import com.example.newsapplicationroom.di.main.newscategory.NewsPagerAdapterComponent;
 
 public class NewsApplication extends Application {
     private static AppComponent appComponent;
+    private static MainActivityComponent.Builder mainActivityComponentBuilder;
+    private static ProfilePageActivityComponent.Builder profilePageActivityComponentBuilder;
+    private static NewsCategoryFragmentComponent.Builder newsCategoryFragmentComponentBuilder;
+    private static LatestNewsActivityComponent.Builder latestNewsAdapterComponentBuilder;
+    private static LatestNewsJobSchedulerComponent.Builder latestNewsJobSchedulerComponentBuilder;
+    private static NewsPagerAdapterComponent newsPagerAdapterComponent;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        appComponent = DaggerAppComponent.builder().application(this).build();
+    public static MainActivityComponent.Builder getMainActivityComponentBuilder() {
+        return mainActivityComponentBuilder;
+    }
+
+    public static ProfilePageActivityComponent.Builder getProfilePageActivityComponentBuilder() {
+        return profilePageActivityComponentBuilder;
     }
 
     public static AppComponent getAppComponent() {
         return appComponent;
     }
 
-    public static AdapterComponent.Builder getAdapterComponentBuilder() {
-        return appComponent.AdapterComponentBuilder();
+    public static NewsCategoryFragmentComponent.Builder getNewsCategoryFragmentComponentBuilder() {
+        return newsCategoryFragmentComponentBuilder;
     }
 
-    public static MainActivityComponent.Builder getMainActivityComponentBuilder() {
-        return appComponent.MainActivityComponentBuilder();
+    public static LatestNewsActivityComponent.Builder getLatestNewsAdapterComponentBuilder() {
+        return latestNewsAdapterComponentBuilder;
     }
 
-    public static LatestNewsJobSchedulerComponent.Builder getAlarmNotificationComponentBuilder() {
-        return appComponent.AlarmNotificationComponentBuilder();
+    public static LatestNewsJobSchedulerComponent.Builder getLatestNewsJobSchedulerComponentBuilder() {
+        return latestNewsJobSchedulerComponentBuilder;
     }
 
-    public static SignInActivityComponent.Builder getSignInActivityComponentBuilder() {
-        return appComponent.SignInActivityComponentBuilder();
+    public static NewsPagerAdapterComponent getNewsPagerAdapterComponent() {
+        return newsPagerAdapterComponent;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        appComponent = DaggerAppComponent.builder().application(this).build();
+        mainActivityComponentBuilder = appComponent.MainActivityComponentBuilder();
+        profilePageActivityComponentBuilder = appComponent.ProfilePageActivityComponentBuilder();
+        newsCategoryFragmentComponentBuilder = appComponent.NewsCategoryFragmentComponentBuilder();
+        latestNewsAdapterComponentBuilder = appComponent.LatestNewsActivityComponentBuilder();
+        latestNewsJobSchedulerComponentBuilder = appComponent.LatestNewsJobSchedulerComponentBuilder();
+        newsPagerAdapterComponent = appComponent.NewsPagerAdapterComponent();
     }
 }

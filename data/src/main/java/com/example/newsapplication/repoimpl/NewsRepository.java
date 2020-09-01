@@ -10,7 +10,7 @@ import com.example.newsapplication.apiservice.NewsApiHandling;
 import com.example.newsapplication.datamodel.NewsApiData;
 import com.example.newsapplication.db.NewsDao;
 import com.example.newsapplication.db.NewsRoomDatabase;
-import com.example.newsapplication.di.component.DaggerNewsApiComponent;
+import com.example.newsapplication.di.DaggerNewsApiComponent;
 import com.example.newsapplication.mapper.NewsMapper;
 import com.example.newsapplication.utils.Constants;
 import com.newsapplicationroom.entity.NewsEntity;

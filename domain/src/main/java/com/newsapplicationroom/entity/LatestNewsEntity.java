@@ -36,13 +36,13 @@ public class LatestNewsEntity {
         this.url = url;
     }
 
-    public void setId(@NonNull int id) {
-        this.id = id;
-    }
-
     @NonNull
     public int getId() {
         return id;
+    }
+
+    public void setId(@NonNull int id) {
+        this.id = id;
     }
 
     @NonNull

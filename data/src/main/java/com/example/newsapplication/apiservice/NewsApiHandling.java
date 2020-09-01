@@ -1,7 +1,7 @@
 package com.example.newsapplication.apiservice;
 
 import com.example.newsapplication.datamodel.NewsApiData;
-import com.example.newsapplication.di.component.DaggerNewsApiComponent;
+import com.example.newsapplication.di.DaggerNewsApiComponent;
 import com.example.newsapplication.utils.Constants;
 
 import javax.inject.Inject;

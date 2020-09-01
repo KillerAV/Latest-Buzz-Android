@@ -25,10 +25,6 @@ public class UserInfoEntity {
         this.country = Constants.DEFAULT_COUNTRY;
     }
 
-    public void setCountry(@NonNull String country) {
-        this.country = country;
-    }
-
     @NonNull
     public String getEmailId() {
         return emailId;
@@ -42,5 +38,9 @@ public class UserInfoEntity {
     @NonNull
     public String getCountry() {
         return country;
+    }
+
+    public void setCountry(@NonNull String country) {
+        this.country = country;
     }
 }

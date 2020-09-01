@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".ui.SplashScreenActivity"
+            android:name=".ui.splash.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,44 +24,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SignInActivity"
+            android:name=".ui.auth.SignInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:parentActivityName=".ui.SignInActivity"
+            android:parentActivityName=".ui.auth.SignInActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.ProfilePageActivity"
-            android:parentActivityName=".ui.MainActivity"
+            android:name=".ui.main.actionbar.profile.ProfilePageActivity"
+            android:parentActivityName=".ui.main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.bulletnews.LatestNewsDescriptionDisplayActivity"
+            android:name=".ui.main.actionbar.bulletnews.description.LatestNewsDescriptionDisplayActivity"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name=".ui.bulletnews.LatestNewsActivity"
+            android:name=".ui.main.actionbar.bulletnews.LatestNewsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.UpdateNewsActivity"
+            android:name=".ui.main.description.UpdateNewsActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.DescriptionDisplayActivity"
+            android:name=".ui.main.description.DescriptionDisplayActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MoreInformationActivity"
+            android:name=".ui.main.description.MoreInformationActivity"
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".ui.bulletnews.LatestNewsJobScheduler"
+            android:name=".ui.main.actionbar.bulletnews.alarm.LatestNewsJobScheduler"
             android:exported="true"
             android:enabled="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
-            android:name=".ui.bulletnews.AlarmReceiver"
+            android:name=".ui.main.actionbar.bulletnews.alarm.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
         <meta-data
