@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.newsapplicationroom.R;
-import com.example.newsapplicationroom.di.component.NewsPagerAdapterComponent;
+import com.example.newsapplicationroom.di.component.MainActivityComponent;
 import com.example.newsapplicationroom.ui.adapter.NewsPagerAdapter;
 import com.example.newsapplicationroom.ui.bulletnews.AlarmReceiver;
 import com.example.newsapplicationroom.ui.bulletnews.LatestNewsActivity;
@@ -83,15 +83,16 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.entertainment_news_tag));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.sports_news_tag));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.health_news_tag));
-        NewsPagerAdapterComponent.Builder builder = NewsApplication.getPagerAdapterComponentBuilder();
+        MainActivityComponent.Builder builder = NewsApplication.getMainActivityComponentBuilder();
         builder
                 .FragmentManager(getSupportFragmentManager())
                 .TabCount(tabLayout.getTabCount())
+                .context(this)
                 .build()
                 .inject(this);
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = firebaseAuth.getCurrentUser();
         userId = firebaseUser.getUid();
         documentReference = firebaseFirestore.collection("users").document(userId);
 

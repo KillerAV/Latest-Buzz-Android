@@ -6,7 +6,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.newsapplicationroom.di.component.AlarmNotificationComponent;
+import com.example.newsapplicationroom.di.component.LatestNewsJobSchedulerComponent;
 import com.example.newsapplicationroom.ui.MainActivity;
 import com.example.newsapplicationroom.ui.NewsApplication;
 import com.example.newsapplicationroom.utils.Constants;
@@ -32,7 +32,7 @@ public class LatestNewsJobScheduler extends JobService {
         MainActivity.toDate = df.format(currDate);
         Date prevDate = new Date(currDate.getTime() - Constants.MILLISECONDS_IN_A_DAY);
         MainActivity.fromDate = df.format(prevDate);
-        AlarmNotificationComponent.Builder builder = NewsApplication.getAlarmNotificationComponentBuilder();
+        LatestNewsJobSchedulerComponent.Builder builder = NewsApplication.getAlarmNotificationComponentBuilder();
         builder
                 .setContext(this)
                 .setFromDate(MainActivity.fromDate)

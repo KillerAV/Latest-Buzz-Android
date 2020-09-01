@@ -5,7 +5,6 @@ import android.app.Application;
 import com.example.newsapplicationroom.di.module.AppModule;
 import com.example.newsapplicationroom.ui.DescriptionDisplayActivity;
 import com.example.newsapplicationroom.ui.ProfilePageActivity;
-import com.example.newsapplicationroom.ui.SignInActivity;
 import com.example.newsapplicationroom.ui.adapter.LatestNewsAdapter;
 import com.example.newsapplicationroom.ui.adapter.NewsAdapter;
 import com.example.newsapplicationroom.ui.adapter.NewsPagerAdapter;
@@ -43,11 +42,11 @@ public interface AppComponent {
 
     AdapterComponent.Builder AdapterComponentBuilder();
 
-    NewsPagerAdapterComponent.Builder NewsPagerAdapterComponentBuilder();
+    MainActivityComponent.Builder MainActivityComponentBuilder();
 
-    AlarmNotificationComponent.Builder AlarmNotificationComponentBuilder();
+    LatestNewsJobSchedulerComponent.Builder AlarmNotificationComponentBuilder();
 
-    FirebaseComponent.Builder FirebaseComponentBuilder();
+    SignInActivityComponent.Builder SignInActivityComponentBuilder();
 
     @Component.Builder
     interface Builder {

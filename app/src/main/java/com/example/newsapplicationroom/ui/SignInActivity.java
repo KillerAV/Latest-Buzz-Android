@@ -41,7 +41,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         NewsApplication
-                .getFirebaseComponentBuilder()
+                .getSignInActivityComponentBuilder()
                 .context(this)
                 .build()
                 .inject(this);

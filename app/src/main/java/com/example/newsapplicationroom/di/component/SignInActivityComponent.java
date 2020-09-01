@@ -11,7 +11,7 @@ import dagger.Subcomponent;
 
 @ActivityScope
 @Subcomponent(modules = FirebaseModule.class)
-public interface FirebaseComponent {
+public interface SignInActivityComponent {
     void inject(SignInActivity signInActivity);
 
     @Subcomponent.Builder
@@ -19,6 +19,6 @@ public interface FirebaseComponent {
         @BindsInstance
         Builder context(Context context);
 
-        FirebaseComponent build();
+        SignInActivityComponent build();
     }
 }

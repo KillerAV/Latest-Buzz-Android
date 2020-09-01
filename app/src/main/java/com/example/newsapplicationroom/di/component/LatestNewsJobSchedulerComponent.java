@@ -13,7 +13,7 @@ import dagger.Subcomponent;
 
 @ActivityScope
 @Subcomponent(modules = AlarmNotificationModule.class)
-public interface AlarmNotificationComponent {
+public interface LatestNewsJobSchedulerComponent {
     void inject(LatestNewsJobScheduler latestNewsJobScheduler);
 
     @Subcomponent.Builder
@@ -27,6 +27,6 @@ public interface AlarmNotificationComponent {
         @BindsInstance
         Builder setToDate(@Named("toDate") String toDate);
 
-        AlarmNotificationComponent build();
+        LatestNewsJobSchedulerComponent build();
     }
 }
